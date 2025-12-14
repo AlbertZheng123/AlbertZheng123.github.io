@@ -3,113 +3,80 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Jeopardy — Happy Anniversary ❤️</title>
+  <title>Anniversary Jeopardy 💗</title>
   <style>
     :root{
-      --bg:#070a1a;
-      --panel:#0b1028;
-      --tile:#101a44;
-      --tile2:#0e163a;
-      --accent:#ffd1dc;
-      --gold:#f7d25a;
-      --text:#eaf0ff;
-      --muted:#a9b4d6;
-      --danger:#ff6b6b;
-      --ok:#62ffa5;
+      --bg: #fff7fb;         /* off-white pink */
+      --panel: #ffffffcc;    /* translucent white */
+      --border: #ffd3e6;     /* baby pink border */
+      --pink: #ff7fb4;       /* primary pink */
+      --pink2:#ffb6d5;       /* softer pink */
+      --text: #2b2b2b;
+      --muted:#6d5b66;
+      --tile:#ffe6f1;
+      --tile2:#ffd3e6;
+      --ok:#26b36b;
+      --bad:#e14b6a;
+      --shadow: 0 18px 60px rgba(255,127,180,.18);
     }
 
     *{box-sizing:border-box}
     body{
       margin:0; min-height:100vh;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: radial-gradient(circle at top, #1b235a, var(--bg));
+      background:
+        radial-gradient(circle at top, #ffe1ef 0%, var(--bg) 55%),
+        radial-gradient(circle at bottom, #ffeaf4 0%, var(--bg) 65%);
       color: var(--text);
       display:flex; flex-direction:column;
     }
 
     header{
-      padding:18px 16px 10px;
+      padding:16px 16px 10px;
       display:flex; align-items:center; justify-content:space-between;
       gap:12px; flex-wrap:wrap;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.18);
-      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      background: var(--panel);
+      backdrop-filter: blur(10px);
     }
 
-    .title{
-      display:flex; flex-direction:column; gap:2px;
-    }
-    .title h1{margin:0; font-size: 20px; letter-spacing:.4px}
+    .title{display:flex; flex-direction:column; gap:2px;}
+    .title h1{margin:0; font-size: 20px; letter-spacing:.3px}
     .title p{margin:0; color:var(--muted); font-size:13px}
 
     .scorebar{
       display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 14px;
+      background: #ffffffb8;
+      border: 1px solid var(--border);
+      border-radius: 16px;
       padding:10px 12px;
+      box-shadow: 0 10px 30px rgba(255,127,180,.12);
     }
-    .score{
-      font-weight:800; font-size:16px;
-    }
+    .score{font-weight:900; font-size:16px; color:#c2185b}
+
     .btn{
-      border:0; cursor:pointer;
-      padding:10px 12px;
-      border-radius: 12px;
-      font-weight:700;
-      background: rgba(255,255,255,.12);
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,.14);
-      transition: transform .12s ease, background .12s ease;
-    }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.16)}
-    .btn.reset{border-color: rgba(247,210,90,.35)}
-    .btn.small{padding:8px 10px; font-size: 13px}
-
-    main{padding:16px; width:min(1100px, 98vw); margin:0 auto; flex:1; display:flex; flex-direction:column; gap:14px}
-
-    .board{
-      display:grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap:10px;
-    }
-
-    .cat{
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      border:1px solid rgba(255,255,255,.12);
-      border-radius: 14px;
-      padding:12px 10px;
-      text-align:center;
-      font-weight:900;
-      text-transform: uppercase;
-      letter-spacing: .8px;
-      font-size: 12px;
-      min-height: 58px;
-      display:flex; align-items:center; justify-content:center;
-      color: var(--accent);
-    }
-
-    .tile{
-      background: linear-gradient(180deg, var(--tile), var(--tile2));
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: 14px;
-      padding:16px 10px;
-      min-height: 70px;
-      display:grid; place-items:center;
-      font-weight: 900;
-      font-size: 22px;
-      color: var(--gold);
+      border:1px solid var(--border);
       cursor:pointer;
-      user-select:none;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-      transition: transform .12s ease, filter .12s ease, opacity .12s ease;
+      padding:10px 12px;
+      border-radius: 14px;
+      font-weight:800;
+      background: #fff;
+      color: var(--text);
+      transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+      box-shadow: 0 8px 20px rgba(255,127,180,.10);
     }
-    .tile:hover{transform: translateY(-2px); filter: brightness(1.08)}
-    .tile.used{
-      cursor: not-allowed;
-      opacity: .35;
-      filter: grayscale(.6);
-      transform:none !important;
+    .btn:hover{transform: translateY(-1px); background:#fff5fa;}
+    .btn.small{padding:8px 10px; font-size: 13px}
+    .btn.reset{border-color:#ffd3e6;}
+
+    main{
+      padding:16px;
+      width:min(1100px, 98vw);
+      margin:0 auto;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
     }
 
     .hint{
@@ -118,63 +85,173 @@
       display:flex; align-items:center; justify-content:space-between;
       gap:10px; flex-wrap:wrap;
       padding: 10px 12px;
-      border: 1px dashed rgba(255,255,255,.14);
-      border-radius: 14px;
-      background: rgba(255,255,255,.04);
+      border: 1px dashed #ffb6d5;
+      border-radius: 16px;
+      background: #ffffffb5;
+    }
+
+    .board{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:10px;
+    }
+
+    .cat{
+      background: linear-gradient(180deg, #fff, #fff5fa);
+      border:1px solid var(--border);
+      border-radius: 16px;
+      padding:12px 10px;
+      text-align:center;
+      font-weight:900;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      font-size: 12px;
+      min-height: 58px;
+      display:flex; align-items:center; justify-content:center;
+      color: #c2185b;
+      box-shadow: 0 10px 30px rgba(255,127,180,.10);
+    }
+
+    .tile{
+      background: linear-gradient(180deg, var(--tile), var(--tile2));
+      border:1px solid #ffb6d5;
+      border-radius: 16px;
+      padding:16px 10px;
+      min-height: 70px;
+      display:grid; place-items:center;
+      font-weight: 950;
+      font-size: 22px;
+      color: #c2185b;
+      cursor:pointer;
+      user-select:none;
+      box-shadow: var(--shadow);
+      transition: transform .12s ease, filter .12s ease, opacity .12s ease;
+    }
+    .tile:hover{transform: translateY(-2px); filter: brightness(1.03)}
+    .tile.used{
+      cursor: not-allowed;
+      opacity: .40;
+      filter: grayscale(.35);
+      transform:none !important;
     }
 
     /* Modal */
     .overlay{
       position:fixed; inset:0;
-      background: rgba(0,0,0,.72);
+      background: rgba(255,140,190,.35);
       display:none;
       align-items:center; justify-content:center;
       padding: 18px;
     }
     .overlay.show{display:flex;}
     .modal{
-      width:min(760px, 96vw);
+      width:min(820px, 96vw);
       border-radius: 18px;
-      background: rgba(11,16,40,.92);
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 30px 120px rgba(0,0,0,.45);
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 120px rgba(194,24,91,.18);
       padding: 18px;
-      backdrop-filter: blur(10px);
       display:flex; flex-direction:column; gap:12px;
     }
+
     .modalhead{
       display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
     }
     .meta{display:flex; flex-direction:column; gap:2px}
     .meta .label{color: var(--muted); font-size: 12px; letter-spacing:.3px}
-    .meta .big{font-size: 18px; font-weight: 900}
+    .meta .big{font-size: 18px; font-weight: 950; color:#c2185b}
+
     .close{
-      background: transparent;
-      border: 1px solid rgba(255,255,255,.14);
+      background: #fff;
+      border: 1px solid var(--border);
       color: var(--text);
       border-radius: 12px;
       padding: 8px 10px;
       cursor:pointer;
+      font-weight:800;
     }
 
     .clue{
       padding: 16px;
       border-radius: 16px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
+      background: #fff7fb;
+      border: 1px solid var(--border);
       font-size: 18px;
       line-height: 1.5;
-      min-height: 120px;
+      min-height: 90px;
       display:flex; align-items:center;
     }
+
+    .mcArea, .typeArea{
+      padding: 14px;
+      border-radius: 16px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .choices{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    .choiceBtn{
+      text-align:left;
+      padding:12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor:pointer;
+      font-weight:800;
+      transition: transform .10s ease, background .10s ease, box-shadow .10s ease;
+      box-shadow: 0 8px 20px rgba(255,127,180,.10);
+    }
+    .choiceBtn:hover{transform: translateY(-1px); background:#fff5fa;}
+    .choiceBtn.correct{border-color: rgba(38,179,107,.35); background: rgba(38,179,107,.10);}
+    .choiceBtn.wrong{border-color: rgba(225,75,106,.35); background: rgba(225,75,106,.10);}
+
+    .typeRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    input[type="text"]{
+      flex:1;
+      min-width: 220px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      outline: none;
+      font-size: 15px;
+    }
+    input[type="text"]:focus{
+      border-color: #ff7fb4;
+      box-shadow: 0 0 0 4px rgba(255,127,180,.15);
+    }
+
+    .result{
+      display:none;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #fff7fb;
+      font-weight: 850;
+    }
+    .result.show{display:block;}
+    .result.ok{border-color: rgba(38,179,107,.35); background: rgba(38,179,107,.10);}
+    .result.bad{border-color: rgba(225,75,106,.35); background: rgba(225,75,106,.10);}
+
     .answer{
       display:none;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(247,210,90,.10);
-      border: 1px solid rgba(247,210,90,.22);
-      color: #fff3c4;
-      font-weight: 700;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #fff7fb;
+      color: #8a2450;
+      font-weight: 800;
       line-height:1.5;
     }
     .answer.show{display:block;}
@@ -182,37 +259,38 @@
     .actions{
       display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between; align-items:center;
     }
-    .leftActions{display:flex; gap:10px; flex-wrap:wrap}
-    .rightActions{display:flex; gap:10px; flex-wrap:wrap}
+    .leftActions, .rightActions{display:flex; gap:10px; flex-wrap:wrap}
 
-    .btn.correct{background: rgba(98,255,165,.14); border-color: rgba(98,255,165,.25)}
-    .btn.wrong{background: rgba(255,107,107,.14); border-color: rgba(255,107,107,.25)}
-    .btn.primary{background: rgba(255,209,220,.16); border-color: rgba(255,209,220,.28)}
-    .btn.primary:hover{background: rgba(255,209,220,.22)}
+    .btn.primary{
+      background: #fff5fa;
+      border-color: #ffb6d5;
+    }
+    .btn.correct{border-color: rgba(38,179,107,.35); background: rgba(38,179,107,.10);}
+    .btn.wrong{border-color: rgba(225,75,106,.35); background: rgba(225,75,106,.10);}
 
-    /* mobile grid */
     @media (max-width: 820px){
-      .board{grid-template-columns: repeat(3, 1fr);}
+      .board{grid-template-columns: repeat(2, 1fr);} /* stacks nicely on phone */
+      .cat{min-height: 52px;}
     }
   </style>
 </head>
 <body>
   <header>
     <div class="title">
-      <h1>Happy Anniversary Jeopardy ❤️</h1>
-      <p>Click a tile. Answer like a champ. Win kisses.</p>
+      <h1>Anniversary Jeopardy 💗</h1>
+      <p>For Talitha • Answer like a legend • Win love</p>
     </div>
 
     <div class="scorebar">
       <div>Score: <span class="score" id="score">$0</span></div>
-      <button class="btn small reset" id="resetBtn">Reset Game</button>
+      <button class="btn small reset" id="resetBtn">Reset</button>
     </div>
   </header>
 
   <main>
     <div class="hint">
-      <div>Tip: customize all questions in the <b>GAME</b> object inside the script.</div>
-      <div>Used tiles: <span id="usedCount">0</span> / <span id="totalCount">30</span></div>
+      <div>Edit all questions inside the <b>GAME</b> object in the script.</div>
+      <div>Used: <span id="usedCount">0</span> / <span id="totalCount">25</span></div>
     </div>
 
     <div class="board" id="board"></div>
@@ -231,6 +309,21 @@
 
       <div class="clue" id="clueText"></div>
 
+      <!-- Multiple choice area (100/200/300) -->
+      <div class="mcArea" id="mcArea" style="display:none;">
+        <div class="choices" id="choices"></div>
+        <div class="result" id="mcResult"></div>
+      </div>
+
+      <!-- Typed response area (400/500) -->
+      <div class="typeArea" id="typeArea" style="display:none;">
+        <div class="typeRow">
+          <input id="typedInput" type="text" placeholder="Type your answer..." autocomplete="off" />
+          <button class="btn primary" id="checkTypedBtn">Check</button>
+        </div>
+        <div class="result" id="typeResult"></div>
+      </div>
+
       <div class="answer" id="answerText"></div>
 
       <div class="actions">
@@ -247,82 +340,79 @@
   </div>
 
   <script>
-    /***************
-     * EDIT ME ❤️
-     * Replace the categories + clues with your anniversary content.
-     * Each clue has:
-     *  - q: the clue text
-     *  - a: the answer text (Jeopardy-style “question” optional)
-     ***************/
+    /*****************
+     * EDIT ME 💗
+     *
+     * For $100/$200/$300:
+     *  - type: "mc"
+     *  - choices: ["A", "B", "C", "D"]
+     *  - correctIndex: 0..3
+     *
+     * For $400/$500:
+     *  - type: "typed"
+     *  - answers: ["acceptable answer 1", "acceptable answer 2"]
+     *
+     * Tip: Put multiple acceptable answers for typed ones (nicknames, spelling variants).
+     ******************/
     const GAME = {
       values: [100, 200, 300, 400, 500],
       categories: [
         {
-          name: "OUR ORIGIN STORY",
+          name: "OUR DATES!",
           clues: [
-            { q: "Where did we first really talk?", a: "What is ____?" },
-            { q: "The first thing I noticed about you was…", a: "What is ____?" },
-            { q: "Our first date was at…", a: "What is ____?" },
-            { q: "The first photo we took together was…", a: "What is ____?" },
-            { q: "The exact moment I realized I liked you:", a: "What is ____?" },
+            { type:"mc", q:"Our go-to date vibe is…", choices:["Movie night","Fancy dinner","Walk + talk","Arcade"], correctIndex:2, answerText:"Walk + talk 💗" },
+            { type:"mc", q:"The snack we always end up getting is…", choices:["Popcorn","Boba","Fries","Ice cream"], correctIndex:1, answerText:"Boba 🧋" },
+            { type:"mc", q:"If we could teleport anywhere for a date, I’d pick…", choices:["Beach","Mountains","City lights","Cozy cabin"], correctIndex:0, answerText:"Beach 🌊" },
+            { type:"typed", q:"Type the name of a place we went on a date that you loved.", answers:["____"], answerText:"(Your answer can vary — set your expected one here if you want strict checking.)" },
+            { type:"typed", q:"Type the exact month/day of our most unforgettable date (MM/DD).", answers:["____"], answerText:"MM/DD" },
           ],
         },
         {
-          name: "INSIDE JOKES",
+          name: "BEGINNING OF US!",
           clues: [
-            { q: "This phrase always makes us laugh:", a: "What is ____?" },
-            { q: "The ‘forbidden’ snack we always get:", a: "What is ____?" },
-            { q: "My most embarrassing moment you still tease me for:", a: "What is ____?" },
-            { q: "Our code word for ‘help me’ in public:", a: "What is ____?" },
-            { q: "The one thing that instantly reminds me of you:", a: "What is ____?" },
+            { type:"mc", q:"The start of us felt like…", choices:["Chaos","A slow spark","Instant fireworks","A plot twist"], correctIndex:1, answerText:"A slow spark ✨" },
+            { type:"mc", q:"The first thing I REALLY noticed about you:", choices:["Your laugh","Your eyes","Your style","Your kindness"], correctIndex:3, answerText:"Your kindness 🥹" },
+            { type:"mc", q:"Our first real ‘us’ moment was when…", choices:["We stayed up talking","We ate together","We shared music","We took a photo"], correctIndex:0, answerText:"We stayed up talking 🌙" },
+            { type:"typed", q:"Type the word/phrase that reminds you of the very beginning of us.", answers:["____"], answerText:"(Set your expected phrase here.)" },
+            { type:"typed", q:"Type what I said/did that made you think ‘okay… I like him.’", answers:["____"], answerText:"(Set your expected one-liner here.)" },
           ],
         },
         {
-          name: "YOU ARE ICONIC",
+          name: "ABOUT TALBERT!",
           clues: [
-            { q: "Your superpower is basically:", a: "What is ____?" },
-            { q: "The outfit of yours I will never forget:", a: "What is ____?" },
-            { q: "Your signature vibe in one word:", a: "What is ____?" },
-            { q: "The way you make bad days better is:", a: "What is ____?" },
-            { q: "A thing you do that I’m secretly obsessed with:", a: "What is ____?" },
+            { type:"mc", q:"Talbert’s most repeated phrase is…", choices:["I’m hungry","Trust me","One more thing","It’s fine"], correctIndex:2, answerText:"One more thing 😭" },
+            { type:"mc", q:"Talbert is most likely to:", choices:["Overplan","Be late","Overthink","Fall asleep first"], correctIndex:2, answerText:"Overthink 🧠" },
+            { type:"mc", q:"Talbert’s love language is closest to:", choices:["Gifts","Quality time","Words","Acts of service"], correctIndex:1, answerText:"Quality time 💞" },
+            { type:"typed", q:"Type Talbert’s #1 favorite thing about Talitha.", answers:["____"], answerText:"(Put your real answer here!)" },
+            { type:"typed", q:"Type Talbert’s biggest promise to Talitha.", answers:["____"], answerText:"(Put your real answer here!)" },
           ],
         },
         {
-          name: "OUR FAVORITES",
+          name: "MY TALITHA!",
           clues: [
-            { q: "Our go-to comfort activity:", a: "What is ____?" },
-            { q: "The song that feels like ‘us’:", a: "What is ____?" },
-            { q: "The food we’d pick every time:", a: "What is ____?" },
-            { q: "The place I want to take you next:", a: "What is ____?" },
-            { q: "The best memory from this year:", a: "What is ____?" },
+            { type:"mc", q:"Talitha’s iconic vibe is:", choices:["Soft & sweet","Funny & chaotic","Calm & wise","All of the above"], correctIndex:3, answerText:"All of the above 👑" },
+            { type:"mc", q:"Talitha’s superpower is basically:", choices:["Making me smile","Reading my mind","Being unstoppable","Making any day better"], correctIndex:3, answerText:"Making any day better 💗" },
+            { type:"mc", q:"When Talitha laughs, the world becomes:", choices:["Louder","Brighter","Slower","Weirder"], correctIndex:1, answerText:"Brighter ✨" },
+            { type:"typed", q:"Type Talitha’s favorite ___ (food/song/color—your choice).", answers:["____"], answerText:"(Set the expected answer, like “pink” / “ramen” / etc.)" },
+            { type:"typed", q:"Type the nickname Talbert loves calling Talitha.", answers:["____"], answerText:"(Put your nickname here.)" },
           ],
         },
         {
-          name: "TRUE OR FALSE",
+          name: "LOVE TO YOU!",
           clues: [
-            { q: "True/False: I fell for you gradually (not instantly).", a: "What is ____?" },
-            { q: "True/False: You’re the reason I smile at my phone.", a: "What is ____?" },
-            { q: "True/False: I’d choose you in every timeline.", a: "What is ____?" },
-            { q: "True/False: I can name your exact coffee order.", a: "What is ____?" },
-            { q: "True/False: You’re my favorite person.", a: "What is ____? (True)" },
-          ],
-        },
-        {
-          name: "FINAL: LOVE LETTER",
-          clues: [
-            { q: "Finish the sentence: ‘I love you because…’", a: "What is (your answer) 💖" },
-            { q: "One promise I want to keep for you:", a: "What is ____?" },
-            { q: "One thing I’m grateful we survived together:", a: "What is ____?" },
-            { q: "One dream I want us to chase:", a: "What is ____?" },
-            { q: "The message I want you to remember forever:", a: "What is ____?" },
+            { type:"mc", q:"My favorite part of every day is:", choices:["Morning","Afternoon","Night","Whenever you’re in it"], correctIndex:3, answerText:"Whenever you’re in it 💞" },
+            { type:"mc", q:"If love had a sound, ours would be:", choices:["A playlist","A heartbeat","A laugh","A quiet ‘I’m here’"], correctIndex:2, answerText:"A laugh 🥰" },
+            { type:"mc", q:"The best ‘gift’ I’ve received this year is:", choices:["A thing","A moment","A lesson","You"], correctIndex:3, answerText:"You 💗" },
+            { type:"typed", q:"Type one thing I do that makes you feel loved.", answers:["____"], answerText:"(Put your expected answer here.)" },
+            { type:"typed", q:"FINAL: Type the sentence ‘I love you because…’ and finish it.", answers:["____"], answerText:"Any heartfelt answer counts 💖 (or set a specific expected phrase)." },
           ],
         },
       ],
     };
 
-    /***************
-     * GAME ENGINE
-     ***************/
+    /*****************
+     * ENGINE
+     ******************/
     const boardEl = document.getElementById("board");
     const overlay = document.getElementById("overlay");
     const clueText = document.getElementById("clueText");
@@ -333,6 +423,15 @@
     const usedCountEl = document.getElementById("usedCount");
     const totalCountEl = document.getElementById("totalCount");
 
+    const mcArea = document.getElementById("mcArea");
+    const choicesEl = document.getElementById("choices");
+    const mcResult = document.getElementById("mcResult");
+
+    const typeArea = document.getElementById("typeArea");
+    const typedInput = document.getElementById("typedInput");
+    const checkTypedBtn = document.getElementById("checkTypedBtn");
+    const typeResult = document.getElementById("typeResult");
+
     const toggleAnswerBtn = document.getElementById("toggleAnswerBtn");
     const closeBtn = document.getElementById("closeBtn");
     const skipBtn = document.getElementById("skipBtn");
@@ -341,9 +440,10 @@
     const resetBtn = document.getElementById("resetBtn");
 
     const state = {
-      used: new Set(),   // key: "c-r"
+      used: new Set(),     // key "c-r"
       score: 0,
-      active: null,      // {c, r, value, clue}
+      active: null,        // {c, r, value, clue, catName}
+      answered: false      // prevents double-scoring from MC/typed auto-check
     };
 
     function money(n){
@@ -351,31 +451,17 @@
       return sign + "$" + Math.abs(n).toLocaleString();
     }
 
+    function normalize(s){
+      return (s ?? "")
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}]+/gu, " ") // keep letters/numbers
+        .trim()
+        .replace(/\s+/g, " ");
+    }
+
     function updateHUD(){
       scoreEl.textContent = money(state.score);
       usedCountEl.textContent = state.used.size;
-    }
-
-    function openClue(c, r){
-      const value = GAME.values[r];
-      const category = GAME.categories[c];
-      const clue = category.clues[r];
-      state.active = { c, r, value, clue, catName: category.name };
-
-      metaLabel.textContent = `${category.name} • ${money(value)}`;
-      metaTitle.textContent = `Clue for ${money(value)}`;
-      clueText.textContent = clue.q;
-
-      answerText.textContent = clue.a;
-      answerText.classList.remove("show");
-      toggleAnswerBtn.textContent = "Show Answer";
-
-      overlay.classList.add("show");
-    }
-
-    function closeModal(){
-      overlay.classList.remove("show");
-      state.active = null;
     }
 
     function markUsed(c, r){
@@ -388,20 +474,64 @@
       updateHUD();
     }
 
+    function openClue(c, r){
+      const value = GAME.values[r];
+      const category = GAME.categories[c];
+      const clue = category.clues[r];
+      state.active = { c, r, value, clue, catName: category.name };
+      state.answered = false;
+
+      metaLabel.textContent = `${category.name} • ${money(value)}`;
+      metaTitle.textContent = `Clue for ${money(value)}`;
+      clueText.textContent = clue.q;
+
+      // reset areas
+      answerText.textContent = clue.answerText ?? "";
+      answerText.classList.remove("show");
+      toggleAnswerBtn.textContent = "Show Answer";
+
+      mcArea.style.display = "none";
+      typeArea.style.display = "none";
+      mcResult.className = "result";
+      mcResult.textContent = "";
+      mcResult.style.display = "none";
+      typeResult.className = "result";
+      typeResult.textContent = "";
+      typeResult.style.display = "none";
+      typedInput.value = "";
+
+      // show correct interaction
+      if(clue.type === "mc"){
+        mcArea.style.display = "flex";
+        renderChoices(clue);
+      } else {
+        typeArea.style.display = "flex";
+        typedInput.focus();
+      }
+
+      overlay.classList.add("show");
+    }
+
+    function closeModal(){
+      overlay.classList.remove("show");
+      state.active = null;
+      state.answered = false;
+    }
+
     function buildBoard(){
       boardEl.innerHTML = "";
 
-      // categories row
-      for(let c=0;c<6;c++){
+      // categories row (5)
+      for(let c=0;c<GAME.categories.length;c++){
         const cat = document.createElement("div");
         cat.className = "cat";
         cat.textContent = GAME.categories[c].name;
         boardEl.appendChild(cat);
       }
 
-      // 5 clue rows
-      for(let r=0;r<5;r++){
-        for(let c=0;c<6;c++){
+      // 5 rows
+      for(let r=0;r<GAME.values.length;r++){
+        for(let c=0;c<GAME.categories.length;c++){
           const t = document.createElement("div");
           t.className = "tile";
           t.textContent = money(GAME.values[r]);
@@ -418,8 +548,69 @@
         }
       }
 
-      totalCountEl.textContent = 6 * 5;
+      totalCountEl.textContent = GAME.categories.length * GAME.values.length;
       updateHUD();
+    }
+
+    function renderChoices(clue){
+      choicesEl.innerHTML = "";
+      clue.choices.forEach((label, idx) => {
+        const b = document.createElement("button");
+        b.className = "choiceBtn";
+        b.textContent = `${String.fromCharCode(65+idx)}. ${label}`;
+        b.addEventListener("click", () => handleMCAnswer(idx));
+        choicesEl.appendChild(b);
+      });
+    }
+
+    function handleMCAnswer(chosenIdx){
+      if(!state.active || state.answered) return;
+      const { clue, value, c, r } = state.active;
+
+      state.answered = true; // lock scoring
+      const correct = chosenIdx === clue.correctIndex;
+
+      // style buttons
+      [...choicesEl.children].forEach((btn, idx) => {
+        btn.disabled = true;
+        if(idx === clue.correctIndex) btn.classList.add("correct");
+        if(idx === chosenIdx && !correct) btn.classList.add("wrong");
+      });
+
+      // show result + score
+      mcResult.style.display = "block";
+      mcResult.classList.add("show", correct ? "ok" : "bad");
+      mcResult.textContent = correct ? `Correct! +${money(value)}` : `Not quite… ${money(-value)}`;
+
+      // apply score + mark used
+      markUsed(c, r);
+      state.score += correct ? value : -value;
+      updateHUD();
+    }
+
+    function handleTypedCheck(){
+      if(!state.active || state.answered) return;
+      const { clue, value, c, r } = state.active;
+
+      const guess = normalize(typedInput.value);
+      const acceptable = (clue.answers ?? []).map(normalize).filter(Boolean);
+
+      // If you leave answers as "____", it won't match — you can still use Show Answer + manual Correct/Wrong.
+      const strict = acceptable.length > 0;
+      const correct = strict && acceptable.includes(guess);
+
+      typeResult.style.display = "block";
+      typeResult.classList.add("show", correct ? "ok" : "bad");
+      typeResult.textContent = correct
+        ? `Correct! +${money(value)}`
+        : `Not matched. Use “Show Answer” then mark Correct/Wrong (or set acceptable answers in the GAME object).`;
+
+      if(correct){
+        state.answered = true;
+        markUsed(c, r);
+        state.score += value;
+        updateHUD();
+      }
     }
 
     // Controls
@@ -428,17 +619,24 @@
       toggleAnswerBtn.textContent = showing ? "Hide Answer" : "Show Answer";
     });
 
-    function resolve(correct){
+    function resolveManual(correct){
       if(!state.active) return;
       const { c, r, value } = state.active;
+
+      // prevent double scoring if already auto-answered correctly
+      if(state.used.has(`${c}-${r}`)){
+        closeModal();
+        return;
+      }
+
       markUsed(c, r);
       state.score += correct ? value : -value;
       updateHUD();
       closeModal();
     }
 
-    correctBtn.addEventListener("click", () => resolve(true));
-    wrongBtn.addEventListener("click", () => resolve(false));
+    correctBtn.addEventListener("click", () => resolveManual(true));
+    wrongBtn.addEventListener("click", () => resolveManual(false));
     closeBtn.addEventListener("click", closeModal);
     skipBtn.addEventListener("click", closeModal);
 
@@ -451,6 +649,11 @@
       state.score = 0;
       closeModal();
       buildBoard();
+    });
+
+    checkTypedBtn.addEventListener("click", handleTypedCheck);
+    typedInput.addEventListener("keydown", (e) => {
+      if(e.key === "Enter") handleTypedCheck();
     });
 
     // Start
