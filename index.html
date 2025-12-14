@@ -3,105 +3,459 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Happy Anniversary ❤️</title>
+  <title>Jeopardy — Happy Anniversary ❤️</title>
   <style>
+    :root{
+      --bg:#070a1a;
+      --panel:#0b1028;
+      --tile:#101a44;
+      --tile2:#0e163a;
+      --accent:#ffd1dc;
+      --gold:#f7d25a;
+      --text:#eaf0ff;
+      --muted:#a9b4d6;
+      --danger:#ff6b6b;
+      --ok:#62ffa5;
+    }
+
+    *{box-sizing:border-box}
     body{
-      margin:0; min-height:100vh; display:grid; place-items:center;
+      margin:0; min-height:100vh;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: radial-gradient(circle at top, #ffd1dc, #0b1020);
-      color: white; overflow:hidden;
+      background: radial-gradient(circle at top, #1b235a, var(--bg));
+      color: var(--text);
+      display:flex; flex-direction:column;
     }
-    .card{
-      width:min(720px, 92vw);
+
+    header{
+      padding:18px 16px 10px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.18);
+      backdrop-filter: blur(8px);
+    }
+
+    .title{
+      display:flex; flex-direction:column; gap:2px;
+    }
+    .title h1{margin:0; font-size: 20px; letter-spacing:.4px}
+    .title p{margin:0; color:var(--muted); font-size:13px}
+
+    .scorebar{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding:10px 12px;
+    }
+    .score{
+      font-weight:800; font-size:16px;
+    }
+    .btn{
+      border:0; cursor:pointer;
+      padding:10px 12px;
+      border-radius: 12px;
+      font-weight:700;
       background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.22);
-      border-radius: 24px;
-      padding: 28px 26px;
-      box-shadow: 0 20px 80px rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-      animation: float 5s ease-in-out infinite;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.14);
+      transition: transform .12s ease, background .12s ease;
     }
-    h1{margin:0 0 10px;font-size: clamp(26px, 4vw, 44px);}
-    p{line-height:1.6; font-size: 16px; opacity:.95}
-    .row{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;}
-    button{
-      border:0; padding:12px 14px; border-radius: 14px;
-      background: white; color:#0b1020; font-weight:700; cursor:pointer;
-      transition: transform .12s ease, box-shadow .12s ease;
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.16)}
+    .btn.reset{border-color: rgba(247,210,90,.35)}
+    .btn.small{padding:8px 10px; font-size: 13px}
+
+    main{padding:16px; width:min(1100px, 98vw); margin:0 auto; flex:1; display:flex; flex-direction:column; gap:14px}
+
+    .board{
+      display:grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap:10px;
     }
-    button:hover{transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,.25);}
-    .note{
-      margin-top: 14px; padding: 14px; border-radius: 16px;
-      background: rgba(0,0,0,.22); border: 1px solid rgba(255,255,255,.18);
+
+    .cat{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      padding:12px 10px;
+      text-align:center;
+      font-weight:900;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      font-size: 12px;
+      min-height: 58px;
+      display:flex; align-items:center; justify-content:center;
+      color: var(--accent);
+    }
+
+    .tile{
+      background: linear-gradient(180deg, var(--tile), var(--tile2));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding:16px 10px;
+      min-height: 70px;
+      display:grid; place-items:center;
+      font-weight: 900;
+      font-size: 22px;
+      color: var(--gold);
+      cursor:pointer;
+      user-select:none;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      transition: transform .12s ease, filter .12s ease, opacity .12s ease;
+    }
+    .tile:hover{transform: translateY(-2px); filter: brightness(1.08)}
+    .tile.used{
+      cursor: not-allowed;
+      opacity: .35;
+      filter: grayscale(.6);
+      transform:none !important;
+    }
+
+    .hint{
+      color: var(--muted);
+      font-size: 13px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; flex-wrap:wrap;
+      padding: 10px 12px;
+      border: 1px dashed rgba(255,255,255,.14);
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+    }
+
+    /* Modal */
+    .overlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.72);
       display:none;
+      align-items:center; justify-content:center;
+      padding: 18px;
     }
-    .hearts span{
-      position:absolute; bottom:-40px; font-size: 22px; opacity:.8;
-      animation: rise linear infinite;
-      filter: drop-shadow(0 8px 10px rgba(0,0,0,.3));
+    .overlay.show{display:flex;}
+    .modal{
+      width:min(760px, 96vw);
+      border-radius: 18px;
+      background: rgba(11,16,40,.92);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 30px 120px rgba(0,0,0,.45);
+      padding: 18px;
+      backdrop-filter: blur(10px);
+      display:flex; flex-direction:column; gap:12px;
     }
-    @keyframes rise{
-      from{transform: translateY(0) scale(1); opacity:.9}
-      to{transform: translateY(-110vh) scale(1.4); opacity:0}
+    .modalhead{
+      display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
     }
-    @keyframes float{
-      0%,100%{transform: translateY(0)}
-      50%{transform: translateY(-8px)}
+    .meta{display:flex; flex-direction:column; gap:2px}
+    .meta .label{color: var(--muted); font-size: 12px; letter-spacing:.3px}
+    .meta .big{font-size: 18px; font-weight: 900}
+    .close{
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.14);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor:pointer;
     }
-    .small{opacity:.8; font-size: 13px; margin-top: 10px}
+
+    .clue{
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      font-size: 18px;
+      line-height: 1.5;
+      min-height: 120px;
+      display:flex; align-items:center;
+    }
+    .answer{
+      display:none;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(247,210,90,.10);
+      border: 1px solid rgba(247,210,90,.22);
+      color: #fff3c4;
+      font-weight: 700;
+      line-height:1.5;
+    }
+    .answer.show{display:block;}
+
+    .actions{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between; align-items:center;
+    }
+    .leftActions{display:flex; gap:10px; flex-wrap:wrap}
+    .rightActions{display:flex; gap:10px; flex-wrap:wrap}
+
+    .btn.correct{background: rgba(98,255,165,.14); border-color: rgba(98,255,165,.25)}
+    .btn.wrong{background: rgba(255,107,107,.14); border-color: rgba(255,107,107,.25)}
+    .btn.primary{background: rgba(255,209,220,.16); border-color: rgba(255,209,220,.28)}
+    .btn.primary:hover{background: rgba(255,209,220,.22)}
+
+    /* mobile grid */
+    @media (max-width: 820px){
+      .board{grid-template-columns: repeat(3, 1fr);}
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Happy Anniversary, my love ❤️</h1>
-    <p>
-      (Write your message here.)<br/>
-      I’m grateful for you, for us, and for every little moment we’ve shared.
-    </p>
-
-    <div class="row">
-      <button id="btn1">Open a surprise</button>
-      <button id="btn2">Why I love you</button>
-      <button id="btn3">Our next date idea</button>
+  <header>
+    <div class="title">
+      <h1>Happy Anniversary Jeopardy ❤️</h1>
+      <p>Click a tile. Answer like a champ. Win kisses.</p>
     </div>
 
-    <div class="note" id="note"></div>
-    <div class="small">Made with love • <span id="date"></span></div>
+    <div class="scorebar">
+      <div>Score: <span class="score" id="score">$0</span></div>
+      <button class="btn small reset" id="resetBtn">Reset Game</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="hint">
+      <div>Tip: customize all questions in the <b>GAME</b> object inside the script.</div>
+      <div>Used tiles: <span id="usedCount">0</span> / <span id="totalCount">30</span></div>
+    </div>
+
+    <div class="board" id="board"></div>
+  </main>
+
+  <!-- Modal -->
+  <div class="overlay" id="overlay">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modalhead">
+        <div class="meta">
+          <div class="label" id="metaLabel">Category • $Value</div>
+          <div class="big" id="metaTitle">Clue</div>
+        </div>
+        <button class="close" id="closeBtn">Close</button>
+      </div>
+
+      <div class="clue" id="clueText"></div>
+
+      <div class="answer" id="answerText"></div>
+
+      <div class="actions">
+        <div class="leftActions">
+          <button class="btn primary" id="toggleAnswerBtn">Show Answer</button>
+          <button class="btn" id="skipBtn">Back to Board</button>
+        </div>
+        <div class="rightActions">
+          <button class="btn wrong" id="wrongBtn">Wrong (-$)</button>
+          <button class="btn correct" id="correctBtn">Correct (+$)</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="hearts" id="hearts"></div>
-
   <script>
-    const note = document.getElementById("note");
-    const dateEl = document.getElementById("date");
-    dateEl.textContent = new Date().toLocaleDateString(undefined, {year:"numeric", month:"long", day:"numeric"});
-
-    const messages = {
-      btn1: "Surprise: I made this just for you. 🥰",
-      btn2: "I love you because… (add 3-10 reasons here as cute bullet points!)",
-      btn3: "Next date: picnic + her favorite snack + a playlist + sunset. 🌅"
+    /***************
+     * EDIT ME ❤️
+     * Replace the categories + clues with your anniversary content.
+     * Each clue has:
+     *  - q: the clue text
+     *  - a: the answer text (Jeopardy-style “question” optional)
+     ***************/
+    const GAME = {
+      values: [100, 200, 300, 400, 500],
+      categories: [
+        {
+          name: "OUR ORIGIN STORY",
+          clues: [
+            { q: "Where did we first really talk?", a: "What is ____?" },
+            { q: "The first thing I noticed about you was…", a: "What is ____?" },
+            { q: "Our first date was at…", a: "What is ____?" },
+            { q: "The first photo we took together was…", a: "What is ____?" },
+            { q: "The exact moment I realized I liked you:", a: "What is ____?" },
+          ],
+        },
+        {
+          name: "INSIDE JOKES",
+          clues: [
+            { q: "This phrase always makes us laugh:", a: "What is ____?" },
+            { q: "The ‘forbidden’ snack we always get:", a: "What is ____?" },
+            { q: "My most embarrassing moment you still tease me for:", a: "What is ____?" },
+            { q: "Our code word for ‘help me’ in public:", a: "What is ____?" },
+            { q: "The one thing that instantly reminds me of you:", a: "What is ____?" },
+          ],
+        },
+        {
+          name: "YOU ARE ICONIC",
+          clues: [
+            { q: "Your superpower is basically:", a: "What is ____?" },
+            { q: "The outfit of yours I will never forget:", a: "What is ____?" },
+            { q: "Your signature vibe in one word:", a: "What is ____?" },
+            { q: "The way you make bad days better is:", a: "What is ____?" },
+            { q: "A thing you do that I’m secretly obsessed with:", a: "What is ____?" },
+          ],
+        },
+        {
+          name: "OUR FAVORITES",
+          clues: [
+            { q: "Our go-to comfort activity:", a: "What is ____?" },
+            { q: "The song that feels like ‘us’:", a: "What is ____?" },
+            { q: "The food we’d pick every time:", a: "What is ____?" },
+            { q: "The place I want to take you next:", a: "What is ____?" },
+            { q: "The best memory from this year:", a: "What is ____?" },
+          ],
+        },
+        {
+          name: "TRUE OR FALSE",
+          clues: [
+            { q: "True/False: I fell for you gradually (not instantly).", a: "What is ____?" },
+            { q: "True/False: You’re the reason I smile at my phone.", a: "What is ____?" },
+            { q: "True/False: I’d choose you in every timeline.", a: "What is ____?" },
+            { q: "True/False: I can name your exact coffee order.", a: "What is ____?" },
+            { q: "True/False: You’re my favorite person.", a: "What is ____? (True)" },
+          ],
+        },
+        {
+          name: "FINAL: LOVE LETTER",
+          clues: [
+            { q: "Finish the sentence: ‘I love you because…’", a: "What is (your answer) 💖" },
+            { q: "One promise I want to keep for you:", a: "What is ____?" },
+            { q: "One thing I’m grateful we survived together:", a: "What is ____?" },
+            { q: "One dream I want us to chase:", a: "What is ____?" },
+            { q: "The message I want you to remember forever:", a: "What is ____?" },
+          ],
+        },
+      ],
     };
 
-    for (const id of ["btn1","btn2","btn3"]) {
-      document.getElementById(id).onclick = () => {
-        note.style.display = "block";
-        note.textContent = messages[id];
-      };
+    /***************
+     * GAME ENGINE
+     ***************/
+    const boardEl = document.getElementById("board");
+    const overlay = document.getElementById("overlay");
+    const clueText = document.getElementById("clueText");
+    const answerText = document.getElementById("answerText");
+    const metaLabel = document.getElementById("metaLabel");
+    const metaTitle = document.getElementById("metaTitle");
+    const scoreEl = document.getElementById("score");
+    const usedCountEl = document.getElementById("usedCount");
+    const totalCountEl = document.getElementById("totalCount");
+
+    const toggleAnswerBtn = document.getElementById("toggleAnswerBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const skipBtn = document.getElementById("skipBtn");
+    const correctBtn = document.getElementById("correctBtn");
+    const wrongBtn = document.getElementById("wrongBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    const state = {
+      used: new Set(),   // key: "c-r"
+      score: 0,
+      active: null,      // {c, r, value, clue}
+    };
+
+    function money(n){
+      const sign = n < 0 ? "-" : "";
+      return sign + "$" + Math.abs(n).toLocaleString();
     }
 
-    // floating hearts
-    const hearts = ["❤️","💖","💕","💘","🌹","✨"];
-    const wrap = document.getElementById("hearts");
-    function spawnHeart(){
-      const s = document.createElement("span");
-      s.textContent = hearts[Math.floor(Math.random()*hearts.length)];
-      s.style.left = Math.random()*100 + "vw";
-      s.style.animationDuration = (6 + Math.random()*6) + "s";
-      s.style.fontSize = (18 + Math.random()*18) + "px";
-      wrap.appendChild(s);
-      setTimeout(()=>s.remove(), 12000);
+    function updateHUD(){
+      scoreEl.textContent = money(state.score);
+      usedCountEl.textContent = state.used.size;
     }
-    setInterval(spawnHeart, 450);
+
+    function openClue(c, r){
+      const value = GAME.values[r];
+      const category = GAME.categories[c];
+      const clue = category.clues[r];
+      state.active = { c, r, value, clue, catName: category.name };
+
+      metaLabel.textContent = `${category.name} • ${money(value)}`;
+      metaTitle.textContent = `Clue for ${money(value)}`;
+      clueText.textContent = clue.q;
+
+      answerText.textContent = clue.a;
+      answerText.classList.remove("show");
+      toggleAnswerBtn.textContent = "Show Answer";
+
+      overlay.classList.add("show");
+    }
+
+    function closeModal(){
+      overlay.classList.remove("show");
+      state.active = null;
+    }
+
+    function markUsed(c, r){
+      state.used.add(`${c}-${r}`);
+      const tile = document.querySelector(`[data-tile="${c}-${r}"]`);
+      if(tile){
+        tile.classList.add("used");
+        tile.textContent = "—";
+      }
+      updateHUD();
+    }
+
+    function buildBoard(){
+      boardEl.innerHTML = "";
+
+      // categories row
+      for(let c=0;c<6;c++){
+        const cat = document.createElement("div");
+        cat.className = "cat";
+        cat.textContent = GAME.categories[c].name;
+        boardEl.appendChild(cat);
+      }
+
+      // 5 clue rows
+      for(let r=0;r<5;r++){
+        for(let c=0;c<6;c++){
+          const t = document.createElement("div");
+          t.className = "tile";
+          t.textContent = money(GAME.values[r]);
+          t.dataset.tile = `${c}-${r}`;
+
+          if(state.used.has(`${c}-${r}`)) t.classList.add("used");
+
+          t.addEventListener("click", () => {
+            if (t.classList.contains("used")) return;
+            openClue(c, r);
+          });
+
+          boardEl.appendChild(t);
+        }
+      }
+
+      totalCountEl.textContent = 6 * 5;
+      updateHUD();
+    }
+
+    // Controls
+    toggleAnswerBtn.addEventListener("click", () => {
+      const showing = answerText.classList.toggle("show");
+      toggleAnswerBtn.textContent = showing ? "Hide Answer" : "Show Answer";
+    });
+
+    function resolve(correct){
+      if(!state.active) return;
+      const { c, r, value } = state.active;
+      markUsed(c, r);
+      state.score += correct ? value : -value;
+      updateHUD();
+      closeModal();
+    }
+
+    correctBtn.addEventListener("click", () => resolve(true));
+    wrongBtn.addEventListener("click", () => resolve(false));
+    closeBtn.addEventListener("click", closeModal);
+    skipBtn.addEventListener("click", closeModal);
+
+    overlay.addEventListener("click", (e) => {
+      if(e.target === overlay) closeModal();
+    });
+
+    resetBtn.addEventListener("click", () => {
+      state.used.clear();
+      state.score = 0;
+      closeModal();
+      buildBoard();
+    });
+
+    // Start
+    buildBoard();
   </script>
 </body>
 </html>
+
