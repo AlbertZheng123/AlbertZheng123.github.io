@@ -6,20 +6,19 @@
   <title>Anniversary Jeopardy 💗</title>
   <style>
     :root{
-      --bg: #fff7fb;         /* off-white pink */
-      --panel: #ffffffcc;    /* translucent white */
-      --border: #ffd3e6;     /* baby pink border */
-      --pink: #ff7fb4;       /* primary pink */
-      --pink2:#ffb6d5;       /* softer pink */
-      --text: #2b2b2b;
+      --bg:#fff7fb;
+      --panel:#ffffffcc;
+      --border:#ffd3e6;
+      --pink:#ff7fb4;
+      --pink2:#ffb6d5;
+      --text:#2b2b2b;
       --muted:#6d5b66;
       --tile:#ffe6f1;
       --tile2:#ffd3e6;
       --ok:#26b36b;
       --bad:#e14b6a;
-      --shadow: 0 18px 60px rgba(255,127,180,.18);
+      --shadow:0 18px 60px rgba(255,127,180,.18);
     }
-
     *{box-sizing:border-box}
     body{
       margin:0; min-height:100vh;
@@ -30,44 +29,44 @@
       color: var(--text);
       display:flex; flex-direction:column;
     }
-
     header{
       padding:16px 16px 10px;
       display:flex; align-items:center; justify-content:space-between;
       gap:12px; flex-wrap:wrap;
-      border-bottom: 1px solid var(--border);
-      background: var(--panel);
+      border-bottom:1px solid var(--border);
+      background:var(--panel);
       backdrop-filter: blur(10px);
     }
-
     .title{display:flex; flex-direction:column; gap:2px;}
-    .title h1{margin:0; font-size: 20px; letter-spacing:.3px}
+    .title h1{margin:0; font-size:20px; letter-spacing:.3px}
     .title p{margin:0; color:var(--muted); font-size:13px}
 
     .scorebar{
       display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-      background: #ffffffb8;
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      background:#ffffffb8;
+      border:1px solid var(--border);
+      border-radius:16px;
       padding:10px 12px;
-      box-shadow: 0 10px 30px rgba(255,127,180,.12);
+      box-shadow:0 10px 30px rgba(255,127,180,.12);
     }
     .score{font-weight:900; font-size:16px; color:#c2185b}
-
     .btn{
       border:1px solid var(--border);
       cursor:pointer;
       padding:10px 12px;
-      border-radius: 14px;
+      border-radius:14px;
       font-weight:800;
-      background: #fff;
-      color: var(--text);
+      background:#fff;
+      color:var(--text);
       transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
-      box-shadow: 0 8px 20px rgba(255,127,180,.10);
+      box-shadow:0 8px 20px rgba(255,127,180,.10);
     }
     .btn:hover{transform: translateY(-1px); background:#fff5fa;}
-    .btn.small{padding:8px 10px; font-size: 13px}
+    .btn.small{padding:8px 10px; font-size:13px}
     .btn.reset{border-color:#ffd3e6;}
+    .btn.primary{background:#fff5fa; border-color:#ffb6d5;}
+    .btn.correct{border-color: rgba(38,179,107,.35); background: rgba(38,179,107,.10);}
+    .btn.wrong{border-color: rgba(225,75,106,.35); background: rgba(225,75,106,.10);}
 
     main{
       padding:16px;
@@ -78,16 +77,15 @@
       flex-direction:column;
       gap:14px;
     }
-
     .hint{
-      color: var(--muted);
-      font-size: 13px;
+      color:var(--muted);
+      font-size:13px;
       display:flex; align-items:center; justify-content:space-between;
       gap:10px; flex-wrap:wrap;
-      padding: 10px 12px;
-      border: 1px dashed #ffb6d5;
-      border-radius: 16px;
-      background: #ffffffb5;
+      padding:10px 12px;
+      border:1px dashed #ffb6d5;
+      border-radius:16px;
+      background:#ffffffb5;
     }
 
     .board{
@@ -95,45 +93,38 @@
       grid-template-columns: repeat(5, 1fr);
       gap:10px;
     }
-
     .cat{
       background: linear-gradient(180deg, #fff, #fff5fa);
       border:1px solid var(--border);
-      border-radius: 16px;
+      border-radius:16px;
       padding:12px 10px;
       text-align:center;
       font-weight:900;
       text-transform: uppercase;
-      letter-spacing: .7px;
-      font-size: 12px;
-      min-height: 58px;
+      letter-spacing:.7px;
+      font-size:12px;
+      min-height:58px;
       display:flex; align-items:center; justify-content:center;
-      color: #c2185b;
-      box-shadow: 0 10px 30px rgba(255,127,180,.10);
+      color:#c2185b;
+      box-shadow:0 10px 30px rgba(255,127,180,.10);
     }
-
     .tile{
       background: linear-gradient(180deg, var(--tile), var(--tile2));
       border:1px solid #ffb6d5;
-      border-radius: 16px;
+      border-radius:16px;
       padding:16px 10px;
-      min-height: 70px;
+      min-height:70px;
       display:grid; place-items:center;
-      font-weight: 950;
-      font-size: 22px;
-      color: #c2185b;
+      font-weight:950;
+      font-size:22px;
+      color:#c2185b;
       cursor:pointer;
       user-select:none;
-      box-shadow: var(--shadow);
+      box-shadow:var(--shadow);
       transition: transform .12s ease, filter .12s ease, opacity .12s ease;
     }
     .tile:hover{transform: translateY(-2px); filter: brightness(1.03)}
-    .tile.used{
-      cursor: not-allowed;
-      opacity: .40;
-      filter: grayscale(.35);
-      transform:none !important;
-    }
+    .tile.used{cursor:not-allowed; opacity:.40; filter: grayscale(.35); transform:none !important;}
 
     /* Modal */
     .overlay{
@@ -141,52 +132,57 @@
       background: rgba(255,140,190,.35);
       display:none;
       align-items:center; justify-content:center;
-      padding: 18px;
+      padding:18px;
     }
     .overlay.show{display:flex;}
     .modal{
-      width:min(820px, 96vw);
-      border-radius: 18px;
-      background: #fff;
-      border: 1px solid var(--border);
-      box-shadow: 0 30px 120px rgba(194,24,91,.18);
-      padding: 18px;
+      width:min(900px, 96vw);
+      border-radius:18px;
+      background:#fff;
+      border:1px solid var(--border);
+      box-shadow:0 30px 120px rgba(194,24,91,.18);
+      padding:18px;
       display:flex; flex-direction:column; gap:12px;
     }
-
-    .modalhead{
-      display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
-    }
+    .modalhead{display:flex; justify-content:space-between; gap:10px; align-items:flex-start;}
     .meta{display:flex; flex-direction:column; gap:2px}
-    .meta .label{color: var(--muted); font-size: 12px; letter-spacing:.3px}
-    .meta .big{font-size: 18px; font-weight: 950; color:#c2185b}
-
+    .meta .label{color:var(--muted); font-size:12px; letter-spacing:.3px}
+    .meta .big{font-size:18px; font-weight:950; color:#c2185b}
     .close{
-      background: #fff;
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 12px;
-      padding: 8px 10px;
+      background:#fff;
+      border:1px solid var(--border);
+      color:var(--text);
+      border-radius:12px;
+      padding:8px 10px;
       cursor:pointer;
       font-weight:800;
     }
 
     .clue{
-      padding: 16px;
-      border-radius: 16px;
-      background: #fff7fb;
-      border: 1px solid var(--border);
-      font-size: 18px;
-      line-height: 1.5;
-      min-height: 90px;
+      padding:16px;
+      border-radius:16px;
+      background:#fff7fb;
+      border:1px solid var(--border);
+      font-size:18px;
+      line-height:1.5;
       display:flex; align-items:center;
     }
 
-    .mcArea, .typeArea{
-      padding: 14px;
-      border-radius: 16px;
-      background: #ffffff;
-      border: 1px solid var(--border);
+    .clueImg{
+      display:none;
+      width:100%;
+      max-height:320px;
+      object-fit:cover;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:#fff7fb;
+    }
+
+    .mcArea, .typeArea, .answerBox{
+      padding:14px;
+      border-radius:16px;
+      background:#ffffff;
+      border:1px solid var(--border);
       display:flex;
       flex-direction:column;
       gap:10px;
@@ -197,20 +193,35 @@
       grid-template-columns: 1fr;
       gap:10px;
     }
+
     .choiceBtn{
+      display:flex;
+      gap:12px;
+      align-items:center;
       text-align:left;
       padding:12px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: #fff;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:#fff;
       cursor:pointer;
       font-weight:800;
       transition: transform .10s ease, background .10s ease, box-shadow .10s ease;
-      box-shadow: 0 8px 20px rgba(255,127,180,.10);
+      box-shadow:0 8px 20px rgba(255,127,180,.10);
     }
     .choiceBtn:hover{transform: translateY(-1px); background:#fff5fa;}
+    .choiceBtn:disabled{cursor:not-allowed; opacity:.85; transform:none;}
     .choiceBtn.correct{border-color: rgba(38,179,107,.35); background: rgba(38,179,107,.10);}
     .choiceBtn.wrong{border-color: rgba(225,75,106,.35); background: rgba(225,75,106,.10);}
+
+    .choiceThumb{
+      width:72px;
+      height:54px;
+      object-fit:cover;
+      border-radius:12px;
+      border:1px solid var(--border);
+      flex:0 0 auto;
+      background:#fff7fb;
+    }
 
     .typeRow{
       display:flex;
@@ -220,57 +231,62 @@
     }
     input[type="text"]{
       flex:1;
-      min-width: 220px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      outline: none;
-      font-size: 15px;
+      min-width:220px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      outline:none;
+      font-size:15px;
     }
     input[type="text"]:focus{
-      border-color: #ff7fb4;
-      box-shadow: 0 0 0 4px rgba(255,127,180,.15);
+      border-color:#ff7fb4;
+      box-shadow:0 0 0 4px rgba(255,127,180,.15);
     }
 
     .result{
       display:none;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: #fff7fb;
-      font-weight: 850;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:#fff7fb;
+      font-weight:850;
     }
     .result.show{display:block;}
     .result.ok{border-color: rgba(38,179,107,.35); background: rgba(38,179,107,.10);}
     .result.bad{border-color: rgba(225,75,106,.35); background: rgba(225,75,106,.10);}
 
-    .answer{
-      display:none;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: #fff7fb;
-      color: #8a2450;
-      font-weight: 800;
-      line-height:1.5;
+    .answerBox{display:none;}
+    .answerBox.show{display:flex;}
+    .answerTitle{
+      font-weight:950;
+      color:#c2185b;
+      letter-spacing:.2px;
     }
-    .answer.show{display:block;}
+    .answerContent{
+      line-height:1.55;
+      font-weight:750;
+      color:#8a2450;
+      white-space:pre-wrap;
+    }
+    .answerImg{
+      display:none;
+      width:100%;
+      max-height:360px;
+      object-fit:cover;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:#fff7fb;
+    }
 
     .actions{
       display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between; align-items:center;
     }
-    .leftActions, .rightActions{display:flex; gap:10px; flex-wrap:wrap}
-
-    .btn.primary{
-      background: #fff5fa;
-      border-color: #ffb6d5;
-    }
-    .btn.correct{border-color: rgba(38,179,107,.35); background: rgba(38,179,107,.10);}
-    .btn.wrong{border-color: rgba(225,75,106,.35); background: rgba(225,75,106,.10);}
+    .leftActions,.rightActions{display:flex; gap:10px; flex-wrap:wrap}
 
     @media (max-width: 820px){
-      .board{grid-template-columns: repeat(2, 1fr);} /* stacks nicely on phone */
-      .cat{min-height: 52px;}
+      .board{grid-template-columns: repeat(2, 1fr);}
+      .cat{min-height:52px;}
+      .choiceThumb{width:64px; height:48px;}
     }
   </style>
 </head>
@@ -278,7 +294,7 @@
   <header>
     <div class="title">
       <h1>Anniversary Jeopardy 💗</h1>
-      <p>For Talitha • Answer like a legend • Win love</p>
+      <p>For Talitha • Baby pink edition</p>
     </div>
 
     <div class="scorebar">
@@ -289,7 +305,7 @@
 
   <main>
     <div class="hint">
-      <div>Edit all questions inside the <b>GAME</b> object in the script.</div>
+      <div>Click a tile, answer, then enjoy the little memory box 💕</div>
       <div>Used: <span id="usedCount">0</span> / <span id="totalCount">25</span></div>
     </div>
 
@@ -306,6 +322,8 @@
         </div>
         <button class="close" id="closeBtn">Close</button>
       </div>
+
+      <img id="clueImg" class="clueImg" alt="Clue image" />
 
       <div class="clue" id="clueText"></div>
 
@@ -324,11 +342,15 @@
         <div class="result" id="typeResult"></div>
       </div>
 
-      <div class="answer" id="answerText"></div>
+      <!-- Answer box (appears AFTER answering/checking) -->
+      <div class="answerBox" id="answerBox">
+        <div class="answerTitle" id="answerTitle">Answer</div>
+        <div class="answerContent" id="answerContent"></div>
+        <img id="answerImg" class="answerImg" alt="Answer image" />
+      </div>
 
       <div class="actions">
         <div class="leftActions">
-          <button class="btn primary" id="toggleAnswerBtn">Show Answer</button>
           <button class="btn" id="skipBtn">Back to Board</button>
         </div>
         <div class="rightActions">
@@ -341,18 +363,21 @@
 
   <script>
     /*****************
-     * EDIT ME 💗
+     * YOUR GAME DATA 💗
      *
      * For $100/$200/$300:
      *  - type: "mc"
-     *  - choices: ["A", "B", "C", "D"]
+     *  - choices: ["text", ...] OR [{text:"...", img:"images/x.jpg"}, ...]
      *  - correctIndex: 0..3
+     *  - (optional) clueImg: show image above question
+     *  - answerBoxText: the memory text to show after answering
+     *  - (optional) answerBoxImg: image shown in answer box after answering
      *
      * For $400/$500:
      *  - type: "typed"
-     *  - answers: ["acceptable answer 1", "acceptable answer 2"]
-     *
-     * Tip: Put multiple acceptable answers for typed ones (nicknames, spelling variants).
+     *  - answers: ["acceptable answer 1", "answer 2"]  (case-insensitive, punctuation-insensitive)
+     *     - Use "*" to accept anything (for trick questions).
+     *  - answerBoxText / answerBoxImg same as above
      ******************/
     const GAME = {
       values: [100, 200, 300, 400, 500],
@@ -360,51 +385,219 @@
         {
           name: "OUR DATES!",
           clues: [
-            { type:"mc", q:"Our go-to date vibe is…", choices:["Movie night","Fancy dinner","Walk + talk","Arcade"], correctIndex:2, answerText:"Walk + talk 💗" },
-            { type:"mc", q:"The snack we always end up getting is…", choices:["Popcorn","Boba","Fries","Ice cream"], correctIndex:1, answerText:"Boba 🧋" },
-            { type:"mc", q:"If we could teleport anywhere for a date, I’d pick…", choices:["Beach","Mountains","City lights","Cozy cabin"], correctIndex:0, answerText:"Beach 🌊" },
-            { type:"typed", q:"Type the name of a place we went on a date that you loved.", answers:["____"], answerText:"(Your answer can vary — set your expected one here if you want strict checking.)" },
-            { type:"typed", q:"Type the exact month/day of our most unforgettable date (MM/DD).", answers:["____"], answerText:"MM/DD" },
+            {
+              type:"mc",
+              q:"Where did we go for our first date?",
+              choices:["Valencia Mall","Northridge","Koreatown","The Americana"],
+              correctIndex:3,
+              answerBoxText:"We went to The Americana on our first date! Remember getting Kuro Sushi and I would be nervous to look at you a lot? It was so awkward but it was really nice being with you!",
+              answerBoxImg:"firstdatepictures.jpg"
+            },
+            {
+              type:"mc",
+              q:"What kind of drink did we have together on our home date?",
+              choices:["Sharetea Boba","Calpico","Mogu Mogu","Peach soda"],
+              correctIndex:2,
+              answerBoxText:"We had mogu mogu! The buldak and drinks were so delicious and those candies that you recommended we get were definitely worth it! Cuddling with you afterwards was so nice, I didn't ever want to leave."
+            },
+            {
+              type:"mc",
+              q:"On which of our dates did Talitha win this prize?",
+              clueImg:"ktown_prize.jpg",
+              choices:["Koreatown Plaza","Little Tokyo","Newhall","Northridge"],
+              correctIndex:0,
+              answerBoxText:"It was at our Koreatown date! It was kind of crazy how you won that prize on your last attempt too! I hope you liked using it baby",
+              answerBoxImg:"ktownspaghetti.jpg"
+            },
+            {
+              type:"typed",
+              q:"Which street was Albert not able to find on our Koreatown Date when driving back?",
+              answers:["north hollywood","northhollywood"],
+              answerBoxText:"I swear I couldn't find the place to turn it was a bit confusing not gonna lie, it was nice to talk about anime and the music on the way back",
+              answerBoxImg:"unravel.jpg"
+            },
+            {
+              type:"typed",
+              q:"What were we wearing the first time we met again after our vacations? And what matching keychains did you get us?",
+              // Keep this flexible: accept a few variants (add more if you want)
+              answers:[
+                "green shirt grey striped shirt fat cat keychains",
+                "green shirt gray striped shirt fat cat keychains",
+                "green shirt grey striped shirt matching fat cat keychains",
+                "green shirt gray striped shirt matching fat cat keychains",
+                "fat cat keychains"
+              ],
+              answerBoxText:"I was wearing a green shirt, Talitha was wearing a grey striped shirt and she got us matching fat cat keychains!",
+              answerBoxImg:"keychains.png"
+            },
           ],
         },
         {
           name: "BEGINNING OF US!",
           clues: [
-            { type:"mc", q:"The start of us felt like…", choices:["Chaos","A slow spark","Instant fireworks","A plot twist"], correctIndex:1, answerText:"A slow spark ✨" },
-            { type:"mc", q:"The first thing I REALLY noticed about you:", choices:["Your laugh","Your eyes","Your style","Your kindness"], correctIndex:3, answerText:"Your kindness 🥹" },
-            { type:"mc", q:"Our first real ‘us’ moment was when…", choices:["We stayed up talking","We ate together","We shared music","We took a photo"], correctIndex:0, answerText:"We stayed up talking 🌙" },
-            { type:"typed", q:"Type the word/phrase that reminds you of the very beginning of us.", answers:["____"], answerText:"(Set your expected phrase here.)" },
-            { type:"typed", q:"Type what I said/did that made you think ‘okay… I like him.’", answers:["____"], answerText:"(Set your expected one-liner here.)" },
+            {
+              type:"mc",
+              q:"How did we start talking to each other?",
+              choices:["We met on Gas","I dmed you on your Instagram story","We were paired up in Comms class","Arranged marriage"],
+              correctIndex:1,
+              answerBoxText:"I dmed you on instagram because you were using a nujabes song and I thought I should just honestly shoot my shot now, im glad I did baby"
+            },
+            {
+              type:"mc",
+              q:"Who said I love you first? How did it happen?",
+              choices:["Albert, on the first date","Talitha, when she got back from Indonesia","Albert, on a facetime call in China","Talitha, when she met up with Albert in Japan"],
+              correctIndex:2,
+              answerBoxText:"I said I love you first on our facetime call in China and we were both laughing and we were hiding from the camera a lot"
+            },
+            {
+              type:"mc",
+              q:"What was the first restaurant we ever ate at together?",
+              choices:["Chili's","India Kitchen","Rice and Nori","Kura Sushi"],
+              correctIndex:3,
+              answerBoxText:"It's Kura Sushi! It was such an awkward time to be honest and I don't think either of us were really that hungry but the rolls were good!"
+            },
+            {
+              type:"typed",
+              q:"When was our first sleep call?",
+              answers:["september 9","september 9th","9/9","sep 9","sep 9th"],
+              answerBoxText:"It was September 9th! I thought I wouldn't be able to sleep at all but it was nice to sleep with someone else on call."
+            },
+            {
+              type:"typed",
+              q:"Where did we have our first kiss?",
+              answers:["japan"],
+              answerBoxText:"Japan! Isn't that crazy? That was a very magical night and it really felt like we were in a movie together!",
+              answerBoxImg:"japan1.jpg"
+            },
           ],
         },
         {
           name: "ABOUT TALBERT!",
           clues: [
-            { type:"mc", q:"Talbert’s most repeated phrase is…", choices:["I’m hungry","Trust me","One more thing","It’s fine"], correctIndex:2, answerText:"One more thing 😭" },
-            { type:"mc", q:"Talbert is most likely to:", choices:["Overplan","Be late","Overthink","Fall asleep first"], correctIndex:2, answerText:"Overthink 🧠" },
-            { type:"mc", q:"Talbert’s love language is closest to:", choices:["Gifts","Quality time","Words","Acts of service"], correctIndex:1, answerText:"Quality time 💞" },
-            { type:"typed", q:"Type Talbert’s #1 favorite thing about Talitha.", answers:["____"], answerText:"(Put your real answer here!)" },
-            { type:"typed", q:"Type Talbert’s biggest promise to Talitha.", answers:["____"], answerText:"(Put your real answer here!)" },
+            {
+              type:"mc",
+              q:"What is our go to activity to do when we eat together?",
+              choices:["Scroll on rednote","Watch youtube together","Scroll on reels","Freestyle rapping"],
+              correctIndex:2,
+              answerBoxText:"It's scrolling on reels! I bet we have watched over 1000 reels at this point talitha. I like how we can take a break and brainrot together sometimes."
+            },
+            {
+              type:"mc",
+              q:"What is our most commonly used pet name for each other?",
+              choices:["Bubu/Dudu","Baby","Sweetie","Albie/Tawifa"],
+              correctIndex:1,
+              answerBoxText:"The answer is baby, my sweetie bubu cute princess tawifa bear!"
+            },
+            {
+              type:"mc",
+              q:"How many times have we called in the month of November alone?",
+              choices:["328","90","42","117"],
+              correctIndex:0,
+              answerBoxText:"It's 328 calls! Woah that is a lot baby it feels like we know all about each other's daily lives now"
+            },
+            {
+              type:"typed",
+              q:"What is the first anniversary gift that we got each other?",
+              // Accept anything (you wanted typed for 400/500, but this is basically a memory reveal)
+              answers:["*"],
+              answerBoxText:"I got you meiji chocolate mushrooms and hi chews and you got me an ello pop new water bottle!"
+            },
+            {
+              type:"typed",
+              q:"On our date in japan, what happened before we left each other?",
+              answers:["first kiss","we shared our first kiss","kiss"],
+              answerBoxText:"We shared our first kiss! It was so magical to me I was full of adrenaline and ran back to the train station afterwards baby!",
+              answerBoxImg:"japan1.jpg"
+            },
           ],
         },
         {
           name: "MY TALITHA!",
           clues: [
-            { type:"mc", q:"Talitha’s iconic vibe is:", choices:["Soft & sweet","Funny & chaotic","Calm & wise","All of the above"], correctIndex:3, answerText:"All of the above 👑" },
-            { type:"mc", q:"Talitha’s superpower is basically:", choices:["Making me smile","Reading my mind","Being unstoppable","Making any day better"], correctIndex:3, answerText:"Making any day better 💗" },
-            { type:"mc", q:"When Talitha laughs, the world becomes:", choices:["Louder","Brighter","Slower","Weirder"], correctIndex:1, answerText:"Brighter ✨" },
-            { type:"typed", q:"Type Talitha’s favorite ___ (food/song/color—your choice).", answers:["____"], answerText:"(Set the expected answer, like “pink” / “ramen” / etc.)" },
-            { type:"typed", q:"Type the nickname Talbert loves calling Talitha.", answers:["____"], answerText:"(Put your nickname here.)" },
+            {
+              type:"mc",
+              q:"Which talitha is dancing on rainbows?",
+              // image choices
+              choices:[
+                {text:"A", img:"sillytalitha.jpg"},
+                {text:"B", img:"madtalitha.jpg"},
+                {text:"C", img:"suprisedtalitha.jpg"},
+                {text:"D", img:"dancingrainbows.jpg"},
+              ],
+              correctIndex:3,
+              answerBoxText:"It is this one:",
+              answerBoxImg:"dancingrainbows.jpg"
+            },
+            {
+              type:"mc",
+              q:"Talitha reminds me of what kind of animal the most?",
+              choices:["Walrus","Sea Lion","Seal because her eyes are precious like a seal","Frill-necked Lizard"],
+              correctIndex:2,
+              answerBoxText:"The answer is seal because her eyes are precious like a seal! Your eyes are so cute talitha"
+            },
+            {
+              type:"mc",
+              q:"Which one of these Talithas is the cutest?",
+              choices:[
+                {text:"A", img:"cutetalitha1.jpg"},
+                {text:"B", img:"cuetalithha2.jpg"},
+                {text:"C", img:"cutetalitha3.jpg"},
+                {text:"D", img:"cutetalitha4.jpg"},
+              ],
+              // doesn't matter—this becomes a trick reveal
+              correctIndex:0,
+              answerBoxText:"TRICK QUESTION! ALL OF THEM ARE THE CUTEST! TALITHA IS ALWAYS CUTE!"
+            },
+            {
+              type:"typed",
+              q:"Is my talitha super pretty, super cute, or super hot?",
+              answers:["*"],
+              answerBoxText:"TRICK QUESTION! MY TALITHA IS ALL OF THE ABOVE!"
+            },
+            {
+              type:"typed",
+              q:"What part of talitha's face do I love the most?",
+              answers:["smile","her smile","beautiful smile"],
+              answerBoxText:"The answer is her beautiful smile! It lights up my day :)"
+            },
           ],
         },
         {
           name: "LOVE TO YOU!",
           clues: [
-            { type:"mc", q:"My favorite part of every day is:", choices:["Morning","Afternoon","Night","Whenever you’re in it"], correctIndex:3, answerText:"Whenever you’re in it 💞" },
-            { type:"mc", q:"If love had a sound, ours would be:", choices:["A playlist","A heartbeat","A laugh","A quiet ‘I’m here’"], correctIndex:2, answerText:"A laugh 🥰" },
-            { type:"mc", q:"The best ‘gift’ I’ve received this year is:", choices:["A thing","A moment","A lesson","You"], correctIndex:3, answerText:"You 💗" },
-            { type:"typed", q:"Type one thing I do that makes you feel loved.", answers:["____"], answerText:"(Put your expected answer here.)" },
-            { type:"typed", q:"FINAL: Type the sentence ‘I love you because…’ and finish it.", answers:["____"], answerText:"Any heartfelt answer counts 💖 (or set a specific expected phrase)." },
+            {
+              type:"mc",
+              q:"What am I talking about here: We would rather not have to do this, but as long as it is with you, I would gladly choose to do it",
+              choices:["Playing minecraft bedwars","Long Distance","Watching gloving reels","Eating at Cafe 3"],
+              correctIndex:1,
+              answerBoxText:"I would gladly choose to do long distance with you if needed baby"
+            },
+            {
+              type:"mc",
+              q:"What do I feel the most from you everyday",
+              choices:["Your love and affection","Your face","Your courage","Your sexiness"],
+              correctIndex:0,
+              answerBoxText:"It's your love and affection! I feel it every single day talitha!"
+            },
+            {
+              type:"mc",
+              q:"How much do I love you talitha?",
+              choices:["1000 Hearts","10000 Hearts","100000 Hearts","Infinite hearts"],
+              correctIndex:3,
+              answerBoxText:"It's Infinite hearts! My love for you is infinite!"
+            },
+            {
+              type:"typed",
+              q:"Talitha is my ____",
+              answers:["*"],
+              answerBoxText:"Talitha is my baby, sweetie, princess, bubu bear, babygirl, honey, wifey, lover, and amazing amazing girlfriend"
+            },
+            {
+              type:"typed",
+              q:"What is the song that started it all?",
+              answers:["space between two worlds","space between two worlds by nujabes"],
+              answerBoxText:"space between two worlds by nujabes"
+            },
           ],
         },
       ],
@@ -415,8 +608,15 @@
      ******************/
     const boardEl = document.getElementById("board");
     const overlay = document.getElementById("overlay");
+
+    const clueImgEl = document.getElementById("clueImg");
     const clueText = document.getElementById("clueText");
-    const answerText = document.getElementById("answerText");
+
+    const answerBox = document.getElementById("answerBox");
+    const answerTitle = document.getElementById("answerTitle");
+    const answerContent = document.getElementById("answerContent");
+    const answerImg = document.getElementById("answerImg");
+
     const metaLabel = document.getElementById("metaLabel");
     const metaTitle = document.getElementById("metaTitle");
     const scoreEl = document.getElementById("score");
@@ -432,7 +632,6 @@
     const checkTypedBtn = document.getElementById("checkTypedBtn");
     const typeResult = document.getElementById("typeResult");
 
-    const toggleAnswerBtn = document.getElementById("toggleAnswerBtn");
     const closeBtn = document.getElementById("closeBtn");
     const skipBtn = document.getElementById("skipBtn");
     const correctBtn = document.getElementById("correctBtn");
@@ -440,10 +639,10 @@
     const resetBtn = document.getElementById("resetBtn");
 
     const state = {
-      used: new Set(),     // key "c-r"
+      used: new Set(),   // "c-r"
       score: 0,
-      active: null,        // {c, r, value, clue, catName}
-      answered: false      // prevents double-scoring from MC/typed auto-check
+      active: null,      // {c,r,value,clue,catName}
+      answered: false    // lock to prevent double scoring
     };
 
     function money(n){
@@ -454,7 +653,7 @@
     function normalize(s){
       return (s ?? "")
         .toLowerCase()
-        .replace(/[^\p{L}\p{N}]+/gu, " ") // keep letters/numbers
+        .replace(/[^\p{L}\p{N}]+/gu, " ")
         .trim()
         .replace(/\s+/g, " ");
     }
@@ -474,6 +673,50 @@
       updateHUD();
     }
 
+    function showAnswerBox(clue){
+      const text = clue.answerBoxText ?? "";
+      const img = clue.answerBoxImg;
+
+      answerTitle.textContent = "Answer 💗";
+      answerContent.textContent = text;
+
+      if(img){
+        answerImg.src = img;
+        answerImg.style.display = "block";
+      } else {
+        answerImg.removeAttribute("src");
+        answerImg.style.display = "none";
+      }
+
+      answerBox.classList.add("show");
+    }
+
+    function resetAnswerUI(){
+      // clue image
+      clueImgEl.style.display = "none";
+      clueImgEl.removeAttribute("src");
+
+      // answer box
+      answerBox.classList.remove("show");
+      answerContent.textContent = "";
+      answerImg.style.display = "none";
+      answerImg.removeAttribute("src");
+
+      // areas + results
+      mcArea.style.display = "none";
+      typeArea.style.display = "none";
+
+      mcResult.className = "result";
+      mcResult.textContent = "";
+      mcResult.style.display = "none";
+
+      typeResult.className = "result";
+      typeResult.textContent = "";
+      typeResult.style.display = "none";
+
+      typedInput.value = "";
+    }
+
     function openClue(c, r){
       const value = GAME.values[r];
       const category = GAME.categories[c];
@@ -485,28 +728,20 @@
       metaTitle.textContent = `Clue for ${money(value)}`;
       clueText.textContent = clue.q;
 
-      // reset areas
-      answerText.textContent = clue.answerText ?? "";
-      answerText.classList.remove("show");
-      toggleAnswerBtn.textContent = "Show Answer";
+      resetAnswerUI();
 
-      mcArea.style.display = "none";
-      typeArea.style.display = "none";
-      mcResult.className = "result";
-      mcResult.textContent = "";
-      mcResult.style.display = "none";
-      typeResult.className = "result";
-      typeResult.textContent = "";
-      typeResult.style.display = "none";
-      typedInput.value = "";
+      // show clue image if provided
+      if(clue.clueImg){
+        clueImgEl.src = clue.clueImg;
+        clueImgEl.style.display = "block";
+      }
 
-      // show correct interaction
       if(clue.type === "mc"){
         mcArea.style.display = "flex";
         renderChoices(clue);
       } else {
         typeArea.style.display = "flex";
-        typedInput.focus();
+        setTimeout(() => typedInput.focus(), 50);
       }
 
       overlay.classList.add("show");
@@ -521,7 +756,7 @@
     function buildBoard(){
       boardEl.innerHTML = "";
 
-      // categories row (5)
+      // categories row
       for(let c=0;c<GAME.categories.length;c++){
         const cat = document.createElement("div");
         cat.className = "cat";
@@ -529,7 +764,7 @@
         boardEl.appendChild(cat);
       }
 
-      // 5 rows
+      // value rows
       for(let r=0;r<GAME.values.length;r++){
         for(let c=0;c<GAME.categories.length;c++){
           const t = document.createElement("div");
@@ -554,10 +789,39 @@
 
     function renderChoices(clue){
       choicesEl.innerHTML = "";
-      clue.choices.forEach((label, idx) => {
+
+      clue.choices.forEach((choice, idx) => {
+        const isObj = typeof choice === "object" && choice !== null;
+        const labelText = isObj ? (choice.text ?? "") : String(choice);
+        const imgPath = isObj ? choice.img : null;
+
         const b = document.createElement("button");
         b.className = "choiceBtn";
-        b.textContent = `${String.fromCharCode(65+idx)}. ${label}`;
+
+        const left = document.createElement("div");
+        left.style.fontWeight = "950";
+        left.style.minWidth = "30px";
+        left.textContent = String.fromCharCode(65 + idx) + ".";
+
+        b.appendChild(left);
+
+        if(imgPath){
+          const img = document.createElement("img");
+          img.className = "choiceThumb";
+          img.alt = "Choice image";
+          img.src = imgPath;
+          b.appendChild(img);
+        }
+
+        const textWrap = document.createElement("div");
+        textWrap.textContent = imgPath ? "" : labelText; // if image-choice, letter is enough
+        if(imgPath){
+          textWrap.style.color = "var(--muted)";
+          textWrap.style.fontWeight = "850";
+          textWrap.textContent = "(image choice)";
+        }
+        b.appendChild(textWrap);
+
         b.addEventListener("click", () => handleMCAnswer(idx));
         choicesEl.appendChild(b);
       });
@@ -567,25 +831,28 @@
       if(!state.active || state.answered) return;
       const { clue, value, c, r } = state.active;
 
-      state.answered = true; // lock scoring
+      state.answered = true;
       const correct = chosenIdx === clue.correctIndex;
 
-      // style buttons
+      // style buttons + disable
       [...choicesEl.children].forEach((btn, idx) => {
         btn.disabled = true;
         if(idx === clue.correctIndex) btn.classList.add("correct");
         if(idx === chosenIdx && !correct) btn.classList.add("wrong");
       });
 
-      // show result + score
+      // result banner
       mcResult.style.display = "block";
       mcResult.classList.add("show", correct ? "ok" : "bad");
       mcResult.textContent = correct ? `Correct! +${money(value)}` : `Not quite… ${money(-value)}`;
 
-      // apply score + mark used
+      // score + mark used
       markUsed(c, r);
       state.score += correct ? value : -value;
       updateHUD();
+
+      // show answer box
+      showAnswerBox(clue);
     }
 
     function handleTypedCheck(){
@@ -593,37 +860,36 @@
       const { clue, value, c, r } = state.active;
 
       const guess = normalize(typedInput.value);
-      const acceptable = (clue.answers ?? []).map(normalize).filter(Boolean);
+      const acceptableRaw = (clue.answers ?? []);
+      const acceptable = acceptableRaw.map(normalize).filter(Boolean);
 
-      // If you leave answers as "____", it won't match — you can still use Show Answer + manual Correct/Wrong.
-      const strict = acceptable.length > 0;
-      const correct = strict && acceptable.includes(guess);
+      const wildcard = acceptable.includes("*");
+      const correct = wildcard ? true : acceptable.includes(guess);
 
       typeResult.style.display = "block";
       typeResult.classList.add("show", correct ? "ok" : "bad");
-      typeResult.textContent = correct
-        ? `Correct! +${money(value)}`
-        : `Not matched. Use “Show Answer” then mark Correct/Wrong (or set acceptable answers in the GAME object).`;
 
       if(correct){
+        typeResult.textContent = `Correct! +${money(value)}`;
         state.answered = true;
         markUsed(c, r);
         state.score += value;
         updateHUD();
+      } else {
+        typeResult.textContent = `Not matched. You can still mark Correct/Wrong manually below if you want.`;
+        // do NOT mark used; allow manual scoring if you want
       }
+
+      // always show the answer memory box after checking
+      showAnswerBox(clue);
     }
 
-    // Controls
-    toggleAnswerBtn.addEventListener("click", () => {
-      const showing = answerText.classList.toggle("show");
-      toggleAnswerBtn.textContent = showing ? "Hide Answer" : "Show Answer";
-    });
-
+    // Manual scoring buttons (works especially for typed if you want flexibility)
     function resolveManual(correct){
       if(!state.active) return;
-      const { c, r, value } = state.active;
+      const { c, r, value, clue } = state.active;
 
-      // prevent double scoring if already auto-answered correctly
+      // prevent double scoring
       if(state.used.has(`${c}-${r}`)){
         closeModal();
         return;
@@ -632,11 +898,20 @@
       markUsed(c, r);
       state.score += correct ? value : -value;
       updateHUD();
-      closeModal();
+
+      // show answer box too (so you still see the memory)
+      showAnswerBox(clue);
     }
+
+    // Controls
+    checkTypedBtn.addEventListener("click", handleTypedCheck);
+    typedInput.addEventListener("keydown", (e) => {
+      if(e.key === "Enter") handleTypedCheck();
+    });
 
     correctBtn.addEventListener("click", () => resolveManual(true));
     wrongBtn.addEventListener("click", () => resolveManual(false));
+
     closeBtn.addEventListener("click", closeModal);
     skipBtn.addEventListener("click", closeModal);
 
@@ -651,14 +926,8 @@
       buildBoard();
     });
 
-    checkTypedBtn.addEventListener("click", handleTypedCheck);
-    typedInput.addEventListener("keydown", (e) => {
-      if(e.key === "Enter") handleTypedCheck();
-    });
-
     // Start
     buildBoard();
   </script>
 </body>
 </html>
-
