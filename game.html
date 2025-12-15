@@ -753,13 +753,15 @@
       return sign + "$" + Math.abs(n).toLocaleString();
     }
 
-    function normalize(s){
-      return (s ?? "")
-        .toLowerCase()
-        .replace(/[^\p{L}\p{N}]+/gu, " ")
-        .trim()
-        .replace(/\s+/g, " ");
-    }
+   function normalize(s){
+  return (s ?? "")
+    .toLowerCase()
+    // safer: keep only a-z and 0-9, turn everything else into spaces
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
 
     function updateHUD(){
       scoreEl.textContent = money(state.score);
