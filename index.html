@@ -696,11 +696,6 @@
     const clueImgEl = document.getElementById("clueImg");
     const clueText = document.getElementById("clueText");
 
-    const answerBox = document.getElementById("answerBox");
-    const answerTitle = document.getElementById("answerTitle");
-    const answerContent = document.getElementById("answerContent");
-    const answerImg = document.getElementById("answerImg");
-
     const metaLabel = document.getElementById("metaLabel");
     const metaTitle = document.getElementById("metaTitle");
     const scoreEl = document.getElementById("score");
@@ -793,31 +788,26 @@ function closeAnswerPopup(){
   answerOverlay.style.display = "none";
 }
 
-    function resetAnswerUI(){
-      // clue image
-      clueImgEl.style.display = "none";
-      clueImgEl.removeAttribute("src");
+function resetAnswerUI(){
+  // clue image
+  clueImgEl.style.display = "none";
+  clueImgEl.removeAttribute("src");
 
-      // answer box
-      answerBox.classList.remove("show");
-      answerContent.textContent = "";
-      answerImg.style.display = "none";
-      answerImg.removeAttribute("src");
+  // areas + results
+  mcArea.style.display = "none";
+  typeArea.style.display = "none";
 
-      // areas + results
-      mcArea.style.display = "none";
-      typeArea.style.display = "none";
+  mcResult.className = "result";
+  mcResult.textContent = "";
+  mcResult.style.display = "none";
 
-      mcResult.className = "result";
-      mcResult.textContent = "";
-      mcResult.style.display = "none";
+  typeResult.className = "result";
+  typeResult.textContent = "";
+  typeResult.style.display = "none";
 
-      typeResult.className = "result";
-      typeResult.textContent = "";
-      typeResult.style.display = "none";
+  typedInput.value = "";
+}
 
-      typedInput.value = "";
-    }
 
     function openClue(c, r){
       const value = GAME.values[r];
@@ -1006,7 +996,8 @@ function handleTypedCheck(){
   }
 
   // always show the memory/answer box after checking
-  showAnswerBox(clue);
+  openAnswerPopup(clue);
+
 }
 
 
@@ -1026,7 +1017,8 @@ function handleTypedCheck(){
       updateHUD();
 
       // show answer box too (so you still see the memory)
-      showAnswerBox(clue);
+      openAnswerPopup(clue);
+
     }
 
     // Controls
