@@ -6,6 +6,57 @@
   <title>Happy 6 Months 💗</title>
 
   <style>
+
+    /* Background icon layer (behind everything, not clickable) */
+.bg-icons{
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: .22;          /* overall softness */
+}
+
+/* Make sure your actual page content sits above the icons */
+header, main, .container, .overlay{
+  position: relative;
+  z-index: 1;
+}
+
+.bg-icon{
+  position: absolute;
+  width: 54px;           /* small icons */
+  height: 54px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 14px rgba(255,127,180,.12));
+  animation: bob 6s ease-in-out infinite;
+}
+
+/* slight floating animation */
+@keyframes bob{
+  0%,100%{ transform: translateY(0) rotate(0deg); }
+  50%{ transform: translateY(-10px) rotate(2deg); }
+}
+
+/* Individual placements (feel free to tweak) */
+.i1 { top: 6%;  left: 6%;  transform: rotate(-8deg); }
+.i2 { top: 10%; left: 78%; transform: rotate(10deg); }
+.i3 { top: 22%; left: 48%; transform: rotate(-6deg); }
+.i4 { top: 34%; left: 14%; transform: rotate(7deg); }
+.i5 { top: 40%; left: 86%; transform: rotate(-9deg); }
+
+.i6 { top: 58%; left: 8%;  transform: rotate(6deg); }
+.i7 { top: 62%; left: 62%; transform: rotate(-10deg); }
+.i8 { top: 72%; left: 30%; transform: rotate(9deg); }
+.i9 { top: 78%; left: 88%; transform: rotate(-6deg); }
+.i10{ top: 86%; left: 52%; transform: rotate(8deg); }
+
+/* Responsive: slightly smaller on phones */
+@media (max-width: 520px){
+  .bg-icon{ width: 40px; height: 40px; }
+  .bg-icons{ opacity: .18; }
+}
+
     :root{
       --pink:#ff7fb4;
       --pink2:#ffb6d5;
@@ -120,6 +171,21 @@
   </style>
 </head>
 <body>
+  <!-- Cute scattered background icons -->
+<div class="bg-icons" aria-hidden="true">
+  <img src="rilakkuma.png" class="bg-icon i1" alt="">
+  <img src="rilakkuma1.png" class="bg-icon i2" alt="">
+  <img src="korilakkuma.png" class="bg-icon i3" alt="">
+  <img src="mofusand1.png" class="bg-icon i4" alt="">
+  <img src="mofusand2.png" class="bg-icon i5" alt="">
+
+  <img src="rilakkuma.png" class="bg-icon i6" alt="">
+  <img src="korilakkuma.png" class="bg-icon i7" alt="">
+  <img src="mofusand1.png" class="bg-icon i8" alt="">
+  <img src="mofusand2.png" class="bg-icon i9" alt="">
+  <img src="rilakkuma1.png" class="bg-icon i10" alt="">
+</div>
+
 
   <div class="container">
     <h1>HAPPY 6 MONTH ANNIVERSARY TALITHA!!! 💗</h1>
