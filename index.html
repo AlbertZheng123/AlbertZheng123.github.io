@@ -3,12 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>For Talitha 💗</title>
-
-  <!-- optional auto-redirect after 6 seconds -->
-  <meta http-equiv="refresh" content="6; url=game.html">
+  <title>Happy 6 Months 💗</title>
 
   <style>
+    :root{
+      --pink:#ff7fb4;
+      --pink2:#ffb6d5;
+      --bg:#fff7fb;
+      --border:#ffd3e6;
+      --text:#7a0038;
+    }
+
     body{
       margin:0;
       min-height:100vh;
@@ -16,71 +21,126 @@
       place-items:center;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
       background:
-        radial-gradient(circle at top, #ffe1ef 0%, #fff7fb 55%),
-        radial-gradient(circle at bottom, #ffeaf4 0%, #fff7fb 65%);
-      color:#c2185b;
+        radial-gradient(circle at top, #ffe1ef 0%, var(--bg) 55%),
+        radial-gradient(circle at bottom, #ffeaf4 0%, var(--bg) 65%);
+      color:var(--text);
       text-align:center;
-      padding: 18px;
+      overflow:hidden;
     }
-    .card{
-      background: rgba(255,255,255,.88);
-      border:1px solid #ffd3e6;
-      border-radius:24px;
-      padding:28px 24px;
-      box-shadow: 0 30px 120px rgba(255,127,180,.18);
-      max-width: 540px;
-      width: 100%;
+
+    .container{
+      animation: fadeIn 1.2s ease forwards;
+      max-width: 720px;
+      padding: 24px;
     }
+
     h1{
-      margin:0 0 10px;
-      font-size: clamp(26px, 4vw, 36px);
+      margin:0 0 16px;
+      font-size: clamp(28px, 4.5vw, 46px);
       font-weight: 950;
-      letter-spacing:.4px;
+      letter-spacing:.6px;
+      color:#c2185b;
     }
-    p{
-      margin:0 0 18px;
-      font-size: 15px;
-      color:#7a3b57;
-      line-height:1.6;
+
+    .subtitle{
+      font-size: clamp(15px, 2.3vw, 18px);
+      line-height:1.7;
       font-weight: 650;
+      color:#7a3b57;
+      margin-bottom: 36px;
+      animation: fadeUp 1.4s ease forwards;
     }
-    .btn{
-      display:inline-block;
-      padding:14px 18px;
-      border-radius:18px;
-      background:#ffb6d5;
-      color:#7a0038;
-      font-weight:900;
+
+    /* Big Jeopardy icon button */
+    .gameButton{
+      width: 220px;
+      height: 220px;
+      margin: 0 auto;
+      border-radius: 32px;
+      background: linear-gradient(180deg, #fff, #fff0f6);
+      border: 2px solid var(--border);
+      box-shadow:
+        0 20px 50px rgba(255,127,180,.25),
+        inset 0 0 0 6px #ffe6f1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      cursor:pointer;
       text-decoration:none;
-      box-shadow: 0 12px 30px rgba(255,127,180,.25);
-      transition: transform .15s ease, box-shadow .15s ease;
+      animation: float 3.2s ease-in-out infinite;
+      transition: transform .2s ease, box-shadow .2s ease;
     }
-    .btn:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 18px 40px rgba(255,127,180,.35);
+
+    .gameButton:hover{
+      transform: translateY(-6px) scale(1.03);
+      box-shadow:
+        0 30px 70px rgba(255,127,180,.35),
+        inset 0 0 0 6px #ffd3e6;
     }
-    .small{
-      margin-top:16px;
-      font-size:13px;
+
+    .icon{
+      font-size: 64px;
+      animation: pulse 2.5s infinite;
+    }
+
+    .gameLabel{
+      font-weight: 950;
+      font-size: 20px;
+      letter-spacing: .6px;
+      color:#c2185b;
+    }
+
+    .hint{
+      margin-top: 20px;
+      font-size: 13px;
       color:#9a5b77;
       opacity:.85;
+      animation: fadeUp 1.8s ease forwards;
+    }
+
+    /* Animations */
+    @keyframes fadeIn{
+      from{opacity:0}
+      to{opacity:1}
+    }
+    @keyframes fadeUp{
+      from{opacity:0; transform: translateY(14px)}
+      to{opacity:1; transform: translateY(0)}
+    }
+    @keyframes float{
+      0%,100%{transform: translateY(0)}
+      50%{transform: translateY(-10px)}
+    }
+    @keyframes pulse{
+      0%,100%{transform: scale(1)}
+      50%{transform: scale(1.08)}
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Happy Anniversary, Talitha 💗</h1>
-    <p>
-      I made a little game for you.<br/>
-      Take a deep breath, smile a little,<br/>
-      and press start 💞
-    </p>
 
-    <a class="btn" href="game.html">Start the Game 💗</a>
+  <div class="container">
+    <h1>HAPPY 6 MONTH ANNIVERSARY TALITHA!!! 💗</h1>
 
-    <div class="small">
-      (If you don’t click, you’ll be redirected automatically)
+    <div class="subtitle">
+      Come play this jeopardy game about our relationship
+      in the past 6 months! <br/>
+      I love you!
+    </div>
+
+    <!-- Clickable Jeopardy Icon -->
+    <a class="gameButton" href="game.html">
+      <div class="icon">💖</div>
+      <div class="gameLabel">JEOPARDY</div>
+    </a>
+
+    <div class="hint">
+      Click the icon to start 💞
     </div>
   </div>
+
 </body>
 </html>
+
