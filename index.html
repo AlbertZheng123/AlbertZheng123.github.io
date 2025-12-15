@@ -319,6 +319,23 @@
   border:1px solid var(--border);
   background:#fff7fb;
 }
+    .answerPopupBody{
+  max-height: 70vh;     /* ✅ scroll area */
+  overflow-y: auto;     /* ✅ */
+  padding: 6px 2px;     /* small spacing */
+}
+
+/* ensure images never crop */
+.answerImg{
+  display:none;
+  width:100%;
+  max-height:520px;
+  object-fit:contain;
+  border-radius:16px;
+  border:1px solid var(--border);
+  background:#fff7fb;
+}
+
 
 
     .actions{
@@ -386,11 +403,7 @@
       </div>
 
       <!-- Answer box (appears AFTER answering/checking) -->
-      <div class="answerBox" id="answerBox">
-        <div class="answerTitle" id="answerTitle">Answer</div>
-        <div class="answerContent" id="answerContent"></div>
-        <img id="answerImg" class="answerImg" alt="Answer image" />
-      </div>
+
 
       <div class="actions">
         <div class="leftActions">
@@ -403,6 +416,34 @@
       </div>
     </div>
   </div>
+  <!-- Answer Popup (separate modal) -->
+<div class="overlay" id="answerOverlay" style="display:none;">
+  <div class="modal" role="dialog" aria-modal="true" style="width:min(900px, 96vw);">
+    <div class="modalhead">
+      <div class="meta">
+        <div class="label" id="answerMetaLabel">Answer • Memory</div>
+        <div class="big" id="answerMetaTitle">💗</div>
+      </div>
+      <button class="close" id="answerCloseBtn">Close</button>
+    </div>
+
+    <div class="answerPopupBody" id="answerPopupBody">
+      <div class="answerTitle" id="answerPopupTitle">Answer 💗</div>
+      <div class="answerContent" id="answerPopupText"></div>
+      <img id="answerPopupImg" class="answerImg" alt="Answer image" />
+    </div>
+
+    <div class="actions">
+      <div class="leftActions">
+        <button class="btn primary" id="answerBackBtn">Back to Board</button>
+      </div>
+      <div class="rightActions">
+        <button class="btn" id="answerStayBtn">Back to Question</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <script>
     /*****************
@@ -680,6 +721,16 @@
     const correctBtn = document.getElementById("correctBtn");
     const wrongBtn = document.getElementById("wrongBtn");
     const resetBtn = document.getElementById("resetBtn");
+    const answerOverlay = document.getElementById("answerOverlay");
+    const answerCloseBtn = document.getElementById("answerCloseBtn");
+    const answerBackBtn = document.getElementById("answerBackBtn");
+    const answerStayBtn = document.getElementById("answerStayBtn");
+    
+    const answerMetaLabel = document.getElementById("answerMetaLabel");
+    const answerMetaTitle = document.getElementById("answerMetaTitle");
+    const answerPopupTitle = document.getElementById("answerPopupTitle");
+    const answerPopupText = document.getElementById("answerPopupText");
+    const answerPopupImg = document.getElementById("answerPopupImg");
 
     const state = {
       used: new Set(),   // "c-r"
@@ -716,23 +767,31 @@
       updateHUD();
     }
 
-    function showAnswerBox(clue){
-      const text = clue.answerBoxText ?? "";
-      const img = clue.answerBoxImg;
+    function openAnswerPopup(clue){
+  // label/title can be whatever you want
+  answerMetaLabel.textContent = "Answer • Memory";
+  answerMetaTitle.textContent = "💗";
+  answerPopupTitle.textContent = "Answer 💗";
 
-      answerTitle.textContent = "Answer 💗";
-      answerContent.textContent = text;
+  answerPopupText.textContent = clue.answerBoxText ?? "";
 
-      if(img){
-        answerImg.src = img;
-        answerImg.style.display = "block";
-      } else {
-        answerImg.removeAttribute("src");
-        answerImg.style.display = "none";
-      }
+  if(clue.answerBoxImg){
+    answerPopupImg.src = clue.answerBoxImg;
+    answerPopupImg.style.display = "block";
+  } else {
+    answerPopupImg.removeAttribute("src");
+    answerPopupImg.style.display = "none";
+  }
 
-      answerBox.classList.add("show");
-    }
+  // show popup
+  answerOverlay.style.display = "flex";
+  answerOverlay.classList.add("show");
+}
+
+function closeAnswerPopup(){
+  answerOverlay.classList.remove("show");
+  answerOverlay.style.display = "none";
+}
 
     function resetAnswerUI(){
       // clue image
@@ -895,7 +954,8 @@
       updateHUD();
 
       // show answer box
-      showAnswerBox(clue);
+      openAnswerPopup(clue);
+
     }
 
     function tokens(s){
@@ -974,7 +1034,7 @@ function handleTypedCheck(){
     typedInput.addEventListener("keydown", (e) => {
       if(e.key === "Enter") handleTypedCheck();
     });
-
+  
     correctBtn.addEventListener("click", () => resolveManual(true));
     wrongBtn.addEventListener("click", () => resolveManual(false));
 
@@ -990,6 +1050,23 @@ function handleTypedCheck(){
       state.score = 0;
       closeModal();
       buildBoard();
+    });
+    answerCloseBtn.addEventListener("click", closeAnswerPopup);
+    
+    // Back to Board: close both popups
+    answerBackBtn.addEventListener("click", () => {
+      closeAnswerPopup();
+      closeModal(); // closes the question modal
+    });
+    
+    // Back to Question: close answer popup only
+    answerStayBtn.addEventListener("click", () => {
+      closeAnswerPopup();
+    });
+    
+    // click outside closes answer popup
+    answerOverlay.addEventListener("click", (e) => {
+      if(e.target === answerOverlay) closeAnswerPopup();
     });
 
     // Start
