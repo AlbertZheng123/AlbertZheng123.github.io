@@ -40,6 +40,30 @@ body{
   50%{ transform: translateY(-10px); }
 }
 
+  #message{
+  position: relative;
+  z-index: 5;
+  margin: 14px auto 10px;
+  max-width: min(720px, 92vw);
+  text-align: center;
+
+  font-size: clamp(14px, 2.2vw, 18px);
+  font-weight: 900;
+  line-height: 1.35;
+  color: #c2185b;
+
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.70);
+  border: 1px solid #ffd3e6;
+  backdrop-filter: blur(6px);
+}
+
+  <div id="message">
+  I love you Talitha!<br>
+  Happy 6 months baby 💗
+</div>
+
 /* video */
 .videoBox{
   position:absolute;
@@ -51,11 +75,13 @@ body{
 }
 
 video{
-  width:100%;
-  border-radius:20px;
-  border:2px solid var(--border);
-  box-shadow:0 20px 60px rgba(255,127,180,.35);
+  width: min(900px, 92vw);
+  border-radius: 18px;
+  border: 1px solid #ffd3e6;
+  display: block;
+  margin: 0 auto 18px;
 }
+
 
 /* tulips */
 .tulip{
