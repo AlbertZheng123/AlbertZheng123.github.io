@@ -8,7 +8,6 @@
 <style>
 :root{
   --bg:#fff7fb;
-  --pink:#ff7fb4;
   --border:#ffd3e6;
 }
 
@@ -19,7 +18,7 @@ body{
     radial-gradient(circle at top, #ffe1ef 0%, var(--bg) 55%),
     radial-gradient(circle at bottom, #ffeaf4 0%, var(--bg) 65%);
   overflow:hidden;
-  font-family: system-ui;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
 }
 
 /* scattered icons */
@@ -28,6 +27,7 @@ body{
   inset:0;
   pointer-events:none;
   opacity:.18;
+  z-index: 1;
 }
 
 .bg-icon{
@@ -40,55 +40,58 @@ body{
   50%{ transform: translateY(-10px); }
 }
 
-  #message{
-  position: relative;
+/* small text banner ABOVE the video */
+#message{
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 5;
-  margin: 14px auto 10px;
-  max-width: min(720px, 92vw);
+
+  max-width: min(680px, 92vw);
   text-align: center;
 
-  font-size: clamp(14px, 2.2vw, 18px);
+  font-size: clamp(12px, 1.7vw, 15px); /* smaller */
   font-weight: 900;
   line-height: 1.35;
   color: #c2185b;
 
-  padding: 10px 12px;
-  border-radius: 16px;
+  padding: 8px 10px;
+  border-radius: 14px;
   background: rgba(255,255,255,.70);
-  border: 1px solid #ffd3e6;
+  border: 1px solid var(--border);
   backdrop-filter: blur(6px);
 }
 
-  <div id="message">
-  I love you Talitha!<br>
-  Happy 6 months baby 💗
-</div>
-
-/* video */
+/* perfectly centered video */
 .videoBox{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:min(800px,90vw);
-  z-index:2;
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+  padding: 16px;
 }
 
 video{
-  width: min(900px, 92vw);
+  width: min(820px, 92vw);
+  max-height: min(70vh, 520px);
   border-radius: 18px;
-  border: 1px solid #ffd3e6;
-  display: block;
-  margin: 0 auto 18px;
+  border: 1px solid var(--border);
+  display:block;
+  background: rgba(255,255,255,.5);
 }
-
 
 /* tulips */
 .tulip{
   position:absolute;
   width:70px;
   cursor:pointer;
+  z-index: 4;
+  user-select:none;
+  -webkit-user-drag:none;
   animation: bob 3s ease-in-out infinite;
+  filter: drop-shadow(0 12px 24px rgba(255,127,180,.25));
 }
 
 @keyframes bob{
@@ -97,22 +100,34 @@ video{
 
 /* bloom text */
 .bloom{
-  position:absolute;
-  font-weight:950;
-  font-size: clamp(22px,5vw,40px);
+  position: fixed;
+  z-index: 999;
+  font-weight: 950;
+  font-size: clamp(16px, 3.2vw, 26px); /* smaller than before */
   color:#c2185b;
-  animation: bloom 1.2s ease forwards;
   pointer-events:none;
+  transform: translate(-50%, -60%) scale(.8);
+  opacity: 0;
+  animation: bloom 1.2s ease forwards;
+  white-space: nowrap;
+  text-shadow: 0 10px 30px rgba(194,24,91,.18);
 }
 
 @keyframes bloom{
-  from{ opacity:0; transform: scale(.4) }
-  to{ opacity:1; transform: scale(1) }
+  0%   { opacity:0; transform: translate(-50%, -60%) scale(.7); }
+  20%  { opacity:1; transform: translate(-50%, -70%) scale(1); }
+  80%  { opacity:1; transform: translate(-50%, -85%) scale(1); }
+  100% { opacity:0; transform: translate(-50%, -95%) scale(.98); }
 }
 </style>
 </head>
 
 <body>
+
+<div id="message">
+  I love you Talitha!<br>
+  Happy 6 months baby 💗
+</div>
 
 <!-- cute background icons -->
 <div class="bg-icons">
@@ -124,38 +139,61 @@ video{
 
 <!-- video -->
 <div class="videoBox">
-  <video src="My video - Date (6).mp4" autoplay controls></video>
+  <video src="My video - Date (6).mp4" autoplay controls playsinline></video>
 </div>
 
 <script>
 const messages = [
   "I love you Talitha!",
-  "Happy 6 months Talitha!"
+  "Happy 6 months Talitha!",
+  "My baby 💗",
+  "You’re my favorite person",
+  "Talitha is my ____ 💗"
 ];
 
-// create tulips
-for(let i=0;i<10;i++){
-  const t = document.createElement("img");
-  t.src = "tulip.png";
-  t.className = "tulip";
-  t.style.top = Math.random()*85 + "%";
-  t.style.left = Math.random()*85 + "%";
+// make a bloom at cursor position
+function popBloom(x, y){
+  const bloom = document.createElement("div");
+  bloom.className = "bloom";
+  bloom.textContent = messages[Math.floor(Math.random() * messages.length)];
+  bloom.style.left = x + "px";
+  bloom.style.top = y + "px";
+  document.body.appendChild(bloom);
+  setTimeout(() => bloom.remove(), 1300);
+}
 
+// create tulips (clickable forever)
+for(let i = 0; i < 10; i++){
   t.onclick = e => {
-    const bloom = document.createElement("div");
-    bloom.className = "bloom";
-    bloom.textContent = messages[Math.floor(Math.random()*messages.length)];
-    bloom.style.top = e.clientY + "px";
-    bloom.style.left = e.clientX + "px";
-    document.body.appendChild(bloom);
+  // create bloom text
+  const bloom = document.createElement("div");
+  bloom.className = "bloom";
+  bloom.textContent = messages[Math.floor(Math.random() * messages.length)];
+  bloom.style.left = e.clientX + "px";
+  bloom.style.top = e.clientY + "px";
+  document.body.appendChild(bloom);
 
-    t.remove();
-    setTimeout(()=>bloom.remove(),3000);
-  };
+  // hide tulip
+  t.style.display = "none";
 
-  document.body.appendChild(t);
+  // remove bloom text after animation
+  setTimeout(() => {
+    bloom.remove();
+  }, 1300); // matches bloom animation length
+
+  // reappear tulip after a delay
+  setTimeout(() => {
+    // optional: move tulip to a new random position
+    t.style.top = (Math.random() * 80 + 10) + "%";
+    t.style.left = (Math.random() * 88 + 6) + "%";
+
+    t.style.display = "block";
+  }, 2200); // appears AFTER text disappears
+};
+
 }
 </script>
 
 </body>
 </html>
+
