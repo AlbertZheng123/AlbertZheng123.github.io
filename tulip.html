@@ -43,25 +43,28 @@ body{
 /* small text banner ABOVE the video */
 #message{
   position: fixed;
-  top: 14px;
+  top: 16px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
 
-  max-width: min(680px, 92vw);
   text-align: center;
-
-  font-size: clamp(12px, 1.7vw, 15px); /* smaller */
-  font-weight: 900;
-  line-height: 1.35;
   color: #c2185b;
+  font-weight: 950;
+  letter-spacing: .3px;
+  line-height: 1.1;
 
-  padding: 8px 10px;
-  border-radius: 14px;
-  background: rgba(255,255,255,.70);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(6px);
+  /* BIG header */
+  font-size: clamp(28px, 5vw, 54px);
+
+  /* no box */
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  backdrop-filter: none;
 }
+
 
 /* perfectly centered video */
 .videoBox{
@@ -144,53 +147,47 @@ video{
 
 <script>
 const messages = [
-  "I love you Talitha!",
-  "Happy 6 months Talitha!",
+  "I love you Talitha! 💗",
+  "Happy 6 months baby 💗",
   "My baby 💗",
-  "You’re my favorite person",
+  "You’re my favorite person 💗",
   "Talitha is my ____ 💗"
 ];
 
-// make a bloom at cursor position
-function popBloom(x, y){
-  const bloom = document.createElement("div");
-  bloom.className = "bloom";
-  bloom.textContent = messages[Math.floor(Math.random() * messages.length)];
-  bloom.style.left = x + "px";
-  bloom.style.top = y + "px";
-  document.body.appendChild(bloom);
-  setTimeout(() => bloom.remove(), 1300);
-}
-
-// create tulips (clickable forever)
+// create tulips
 for(let i = 0; i < 10; i++){
-  t.onclick = e => {
-  // create bloom text
-  const bloom = document.createElement("div");
-  bloom.className = "bloom";
-  bloom.textContent = messages[Math.floor(Math.random() * messages.length)];
-  bloom.style.left = e.clientX + "px";
-  bloom.style.top = e.clientY + "px";
-  document.body.appendChild(bloom);
+  const t = document.createElement("img");
+  t.src = "tulip.png";
+  t.className = "tulip";
 
-  // hide tulip
-  t.style.display = "none";
+  // initial random position
+  t.style.top = (Math.random() * 80 + 10) + "%";
+  t.style.left = (Math.random() * 88 + 6) + "%";
 
-  // remove bloom text after animation
-  setTimeout(() => {
-    bloom.remove();
-  }, 1300); // matches bloom animation length
+  t.addEventListener("click", (e) => {
+    // bloom text
+    const bloom = document.createElement("div");
+    bloom.className = "bloom";
+    bloom.textContent = messages[Math.floor(Math.random() * messages.length)];
+    bloom.style.left = e.clientX + "px";
+    bloom.style.top = e.clientY + "px";
+    document.body.appendChild(bloom);
 
-  // reappear tulip after a delay
-  setTimeout(() => {
-    // optional: move tulip to a new random position
-    t.style.top = (Math.random() * 80 + 10) + "%";
-    t.style.left = (Math.random() * 88 + 6) + "%";
+    // hide tulip
+    t.style.display = "none";
 
-    t.style.display = "block";
-  }, 2200); // appears AFTER text disappears
-};
+    // remove bloom after animation
+    setTimeout(() => bloom.remove(), 1300);
 
+    // re-show tulip after delay (and move it)
+    setTimeout(() => {
+      t.style.top = (Math.random() * 80 + 10) + "%";
+      t.style.left = (Math.random() * 88 + 6) + "%";
+      t.style.display = "block";
+    }, 2200);
+  });
+
+  document.body.appendChild(t);
 }
 </script>
 
