@@ -453,8 +453,9 @@ header{
   height: 90px;
   object-fit: contain;
   cursor: pointer;
-  z-index: 999;
+  z-index: 100000;           /* way above overlays */
   display: none;
+  pointer-events: auto;      /* force clickable */
 
   animation: tulipPop 1.6s ease-in-out infinite;
   filter: drop-shadow(0 12px 24px rgba(255,127,180,.35));
@@ -464,6 +465,7 @@ header{
   0%,100%{ transform: translateX(-50%) scale(1); }
   50%{ transform: translateX(-50%) scale(1.08); }
 }
+
 
 
 @keyframes tulipPop{
@@ -510,6 +512,12 @@ header{
     <div class="board" id="board"></div>
   </main>
 
+  <img
+  src="tulip.png"
+  id="secretTulip"
+  alt="Secret tulip"
+  title="💗"
+>
   <!-- Modal -->
   <div class="overlay" id="overlay">
     <div class="modal" role="dialog" aria-modal="true">
@@ -1244,15 +1252,15 @@ function handleTypedCheck(){
         window.location.href = "tulip.html";
       });
     }
+  document.addEventListener("click", (e) => {
+  if (e.target && e.target.id === "secretTulip") {
+    window.location.assign("tulip.html");
+  }
+});
 
 
   </script>
 
-<img
-  src="tulip.png"
-  id="secretTulip"
-  alt="Secret tulip"
-  title="💗"
->
+
 </body>
 </html>
