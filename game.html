@@ -90,18 +90,37 @@ header, main, .container, .overlay{
   backdrop-filter: blur(10px);
 }
 
+/* Header should blend into the page background (no boxed title card) */
+header{
+  padding:16px 16px 12px;
+  display:grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items:center;
+  gap:12px;
+
+  border-bottom:1px solid var(--border);
+
+  /* remove boxed panel look */
+  background: transparent;
+  backdrop-filter: none;
+}
+
+/* Title area: no box, just centered text */
 .title{
   grid-column: 2;
   text-align:center;
   display:flex;
   flex-direction:column;
   gap:4px;
-  padding: 6px 14px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 179, 213, .65);
-  background: linear-gradient(180deg, #ffffff, #fff2f8);
-  box-shadow: 0 10px 30px rgba(255,127,180,.12);
+
+  /* remove the “card” */
+  padding:0;
+  border-radius:0;
+  border:none;
+  background: transparent;
+  box-shadow:none;
 }
+
 
 .title h1{
   margin:0;
@@ -144,14 +163,15 @@ header, main, .container, .overlay{
     .btn.wrong{border-color: rgba(225,75,106,.35); background: rgba(225,75,106,.10);}
 
     main{
-      padding:16px;
-      width:min(1100px, 98vw);
-      margin:0 auto;
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-    }
+  padding:16px;
+  width:min(1300px, 99vw); /* bigger than before */
+  margin:0 auto;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
     .hint{
       color:var(--muted);
       font-size:13px;
@@ -272,7 +292,7 @@ header, main, .container, .overlay{
       grid-template-columns: 1fr;
       gap:10px;
     }
-
+    
     .choiceBtn{
       display:flex;
       gap:12px;
@@ -300,6 +320,34 @@ header, main, .container, .overlay{
   border:1px solid var(--border);
   flex:0 0 auto;
   background:#fff7fb;
+}
+  /* When the question has image choices, show them as 2x2 squares */
+.choices.imageGrid{
+  grid-template-columns: repeat(2, 1fr);
+  gap:12px;
+}
+
+.choiceBtn.imageChoice{
+  display:block;
+  padding:10px;
+  border-radius:18px;
+}
+
+.choiceBtn.imageChoice .choiceLetter{
+  font-weight:950;
+  margin-bottom:8px;
+  color:#c2185b;
+}
+
+/* Big square image that fits fully (no cropping) */
+.choiceBtn.imageChoice img.choiceThumb{
+  width:100%;
+  aspect-ratio: 1 / 1;     /* makes it a square */
+  height:auto;
+  object-fit: contain;     /* show whole image */
+  border-radius:16px;
+  background:#fff7fb;
+  border:1px solid var(--border);
 }
 
 
@@ -960,45 +1008,55 @@ function resetAnswerUI(){
       updateHUD();
     }
 
-    function renderChoices(clue){
-      choicesEl.innerHTML = "";
+  function renderChoices(clue){
+  choicesEl.innerHTML = "";
 
-      clue.choices.forEach((choice, idx) => {
-        const isObj = typeof choice === "object" && choice !== null;
-        const labelText = isObj ? (choice.text ?? "") : String(choice);
-        const imgPath = isObj ? choice.img : null;
+  const isImageChoices = clue.choices?.every(ch => typeof ch === "object" && ch?.img);
 
-        const b = document.createElement("button");
-        b.className = "choiceBtn";
+  // toggle 2x2 layout
+  choicesEl.classList.toggle("imageGrid", isImageChoices);
 
-        const left = document.createElement("div");
-        left.style.fontWeight = "950";
-        left.style.minWidth = "30px";
-        left.textContent = String.fromCharCode(65 + idx) + ".";
+  clue.choices.forEach((choice, idx) => {
+    const isObj = typeof choice === "object" && choice !== null;
+    const labelText = isObj ? (choice.text ?? "") : String(choice);
+    const imgPath = isObj ? choice.img : null;
 
-        b.appendChild(left);
+    const b = document.createElement("button");
+    b.className = "choiceBtn";
 
-        if(imgPath){
-          const img = document.createElement("img");
-          img.className = "choiceThumb";
-          img.alt = "Choice image";
-          img.src = imgPath;
-          b.appendChild(img);
-        }
+    // letter label (A/B/C/D)
+    const left = document.createElement("div");
+    left.className = "choiceLetter";
+    left.textContent = String.fromCharCode(65 + idx) + ".";
+    b.appendChild(left);
 
-        const textWrap = document.createElement("div");
-        textWrap.textContent = imgPath ? "" : labelText; // if image-choice, letter is enough
-        if(imgPath){
-          textWrap.style.color = "var(--muted)";
-          textWrap.style.fontWeight = "850";
-          textWrap.textContent = "(image choice)";
-        }
-        b.appendChild(textWrap);
+    if(isImageChoices){
+      // image-only big square (no "(image choice)" text)
+      b.classList.add("imageChoice");
 
-        b.addEventListener("click", () => handleMCAnswer(idx));
-        choicesEl.appendChild(b);
-      });
+      const img = document.createElement("img");
+      img.className = "choiceThumb";
+      img.alt = `Choice ${String.fromCharCode(65 + idx)} image`;
+      img.src = imgPath;
+      b.appendChild(img);
+
+    } else {
+      // normal text-choice layout (keep your existing look)
+      b.style.display = "flex";
+      b.style.gap = "12px";
+      b.style.alignItems = "center";
+      left.style.minWidth = "30px";
+
+      const textWrap = document.createElement("div");
+      textWrap.textContent = labelText;
+      b.appendChild(textWrap);
     }
+
+    b.addEventListener("click", () => handleMCAnswer(idx));
+    choicesEl.appendChild(b);
+  });
+}
+
 
     function handleMCAnswer(chosenIdx){
       if(!state.active || state.answered) return;
