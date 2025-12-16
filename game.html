@@ -444,6 +444,26 @@ header{
       .cat{min-height:52px;}
       .choiceThumb{width:64px; height:48px;}
     }
+    #secretTulip{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  cursor: pointer;
+  z-index: 999;
+  display: none;
+
+  animation: tulipPop 1.6s ease-in-out infinite;
+  filter: drop-shadow(0 12px 24px rgba(255,127,180,.35));
+}
+
+@keyframes tulipPop{
+  0%,100%{ transform: scale(1) }
+  50%{ transform: scale(1.08) }
+}
+
   </style>
 </head>
 <body>
@@ -876,10 +896,16 @@ header{
 }
 
 
-    function updateHUD(){
-      scoreEl.textContent = money(state.score);
-      usedCountEl.textContent = state.used.size;
-    }
+function updateHUD(){
+  scoreEl.textContent = money(state.score);
+  usedCountEl.textContent = state.used.size;
+
+  // 🌷 Unlock secret tulip
+  if(state.score >= 2000){
+    document.getElementById("secretTulip").style.display = "block";
+  }
+}
+
 
     function markUsed(c, r){
       state.used.add(`${c}-${r}`);
@@ -890,6 +916,9 @@ header{
       }
       updateHUD();
     }
+  document.getElementById("secretTulip")?.addEventListener("click", () => {
+  window.location.href = "tulip.html";
+});
 
     function openAnswerPopup(clue){
   // label/title can be whatever you want
@@ -1202,6 +1231,17 @@ function handleTypedCheck(){
 
     // Start
     buildBoard();
+
+    <!-- Secret Tulip Unlock -->
+<img
+  src="tulip.png"
+  id="secretTulip"
+  alt="Secret tulip"
+  title="💗"
+>
+
   </script>
+
+
 </body>
 </html>
